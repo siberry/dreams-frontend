@@ -3,6 +3,12 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  componentDidMount() {
+    fetch("http://localhost:3000/dream_tags")
+    .then(res => res.json())
+    .then(console.log)
+  }
+  
   return (
     <div className="App">
       <header className="App-header">
