@@ -1,9 +1,37 @@
 import React from 'react'
+import { Card, Image, Button } from 'semantic-ui-react'
 
-const DreamInterpretation = (props) => {
-  const handleClick = (action) => {
+class DreamInterpretation extends React.Component {
+  state = {
+    clicked: false
+  }
+
+  render() {
+    return (
+      <Card onClick={null /*this.handleCardClick */}>
+        <Card.Header textAlign="center" color="grey" content={this.props.tag_name}/>
+        <Image src={this.props.img_url} wrapped ui={false}/>
+
+        <Button onClick={() => this.handleClick("change")}>Find a new image</Button>
+        {/*
+          <Button onClick={() => this.handleClick("dontChange")}>Image is perfect</Button>
+          <strong>
+          //   {this.props.tag_name}
+          // </strong>
+          // {this.props.interpretation.split("\n").map((p, i) => <p key={i}>{p}</p>)}
+
+          */}
+      </Card>
+    )
+  }
+
+  handleCardClick = () => {
+    // this.setState(prevState => )
+  }
+
+  handleClick = (action) => {
     const change = action === "change"
-    fetch(`http://localhost:3000/dream_tags/${props.id}`, {
+    fetch(`http://localhost:3000/dream_tags/${this.props.id}`, {
       method: "PATCH",
       headers: {
         'Content-Type': 'application/json',
@@ -12,17 +40,6 @@ const DreamInterpretation = (props) => {
       body: JSON.stringify({change_image: change})
     })
   }
-  return (
-    <li>
-      <strong>
-        {props.tag_name}
-      </strong>
-      {props.interpretation.split("\n").map((p, i) => <p key={i}>{p}</p>)}
-      <button onClick={() => handleClick("change")}>Find a new image</button>
-      <button onClick={() => handleClick("dontChange")}>Image is perfect</button>
-      {props.img_url ? <img src={props.img_url} /> : null}
-    </li>
-  )
 }
 
 export default DreamInterpretation
