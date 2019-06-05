@@ -19,7 +19,6 @@ class DreamDictionary extends React.Component {
   }
 
   render() {
-    console.log(this.state.interpretations[0])
     return (
       <ul>{this.renderDreamInterpretations()}</ul>
     )
