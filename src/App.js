@@ -9,16 +9,16 @@ function App() {
 
   return (
     <div>
+      <Route path="/"
+        component={ Nav }/>
+      <Switch>
+        <Route path="/dream_dictionary"
+          render={(routerProps) => <DreamDictionary {...routerProps}/>}/>
         <Route path="/"
-          component={ Nav }/>
-        <Switch>
-          <Route path="/dream_dictionary"
-            render={(routerProps) => <DreamDictionary {...routerProps}/>}/>
-          <Route path="/"
-            render={(routerProps) => <SignUpForm {...routerProps}/>}/>
-          <Route render={() => <Redirect to='/'/>}/>
-        </Switch>
-      </div>
+          render={(routerProps) => <SignUpForm {...routerProps}/>}/>
+        <Route render={() => <Redirect to='/'/>}/>
+      </Switch>
+    </div>
   );
 }
 

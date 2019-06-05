@@ -10,7 +10,7 @@ class SignUpForm extends React.Component {
 
   render() {
     return (
-      <Form>
+      <Form onSubmit={this.handleSubmit}>
         <Form.Field>
           <label>Username</label>
           <input onChange={this.handleChange} name="username" value={this.state.username} placeholder="Username"/>
@@ -44,7 +44,7 @@ class SignUpForm extends React.Component {
 
   createUser = () => {
 		if (this.state.password === this.state.passwordConfirmation){
-			fetch("http://localhost:3001/api/v1/users", {
+			fetch("http://localhost:3000/users", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
