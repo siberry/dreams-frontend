@@ -22,19 +22,21 @@ export default class Nav extends Component {
           name='dream_dictionary'
           active={activeItem === 'dream_dictionary'}
           href="/dream_dictionary"
-          onClick={this.handleItemClick}
-        />
-        <Menu.Item
-          name='friends'
-          active={activeItem === 'friends'}
-          onClick={this.handleItemClick}
         />
         <Menu.Menu position='right'>
-          <Menu.Item
-            name='logout'
-            active={activeItem === 'logout'}
-            onClick={this.handleItemClick}
-          />
+          {this.props.currentUser ?
+            <Menu.Item
+              name='logout'
+              active={activeItem === 'logout'}
+              onClick={this.handleItemClick}
+              />
+            :
+            <Menu.Item
+              name='sign_up'
+              active={activeItem === 'sign_up'}
+              href="/sign_up"
+              />
+          }
         </Menu.Menu>
       </Menu>
     )
