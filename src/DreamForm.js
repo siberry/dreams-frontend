@@ -112,7 +112,7 @@ class DreamForm extends React.Component {
 
   handleAddition = (e, { value }) => {
     this.setState(prevState => ({
-      tags: [{ text: value, value }, ...prevState.options],
+      tagOptions: [{ text: value, value }, ...prevState.tagOptions],
     }))
   }
 
