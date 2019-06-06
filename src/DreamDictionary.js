@@ -6,14 +6,15 @@ import { Card, Menu, Divider, Container } from 'semantic-ui-react'
 class DreamDictionary extends React.Component {
   state = {
     interpretations: [],
-    selectedLetter: this.props.match.params.letter
+    selectedLetter: "A"
   }
 
   componentDidMount() {
     fetch("http://localhost:3000/dream_tags")
     .then(res => res.json())
     .then(interpretations => this.setState({
-      interpretations
+      interpretations,
+      selectedLetter: this.props.match.params.letter
     }))
   }
 
