@@ -1,6 +1,6 @@
 import React from 'react'
 import { DateInput } from 'semantic-ui-calendar-react';
-import { Form } from 'semantic-ui-react'
+import { Form, Container } from 'semantic-ui-react'
 
 class DreamForm extends React.Component {
   state = {
@@ -26,15 +26,24 @@ class DreamForm extends React.Component {
 
   render() {
     return(
-      <Form>
-       <DateInput
-         name="date"
-         placeholder="Date"
-         value={this.state.date}
-         iconPosition="left"
-         onChange={this.handleChange}
-       />
-      </Form>
+      <Container text>
+        <Form >
+          <Form.Field>
+            <label>Date</label>
+            <DateInput
+              name="date"
+              placeholder="Date"
+              value={this.state.date}
+              iconPosition="left"
+              onChange={this.handleChange}
+              />
+          </Form.Field>
+          <Form.Field >
+            <label>Hours Slept</label>
+            <Form.Input type="number"/>
+          </Form.Field>
+        </Form>
+      </Container>
     )
   }
 

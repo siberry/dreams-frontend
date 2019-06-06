@@ -6,7 +6,9 @@ import LoginForm from './LoginForm'
 import Nav from './Nav'
 import Profile from './Profile'
 import DreamForm from './DreamForm'
-import { Route, Switch, Redirect } from 'react-router-dom';
+import DreamFeed from './DreamFeed'
+import { Route, Switch, Redirect, } from 'react-router-dom';
+import { Container } from 'semantic-ui-react'
 
 class App extends React.Component {
   state = {
@@ -41,23 +43,26 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         <Route path="/"
           render={(routerProps) => <Nav {...routerProps} currentUser={this.state.currentUser} logOut={this.logOut}/>}/>
-        <Switch>
-          <Route path="/post_dream" component={DreamForm} />
-          <Route path="/users/:id" component={Profile} />
-          <Route path="/dream_dictionary/:letter"
-            render={(routerProps) => <DreamDictionary {...routerProps}/>}/>
-          <Route path="/dream_dictionary"
-            render={(routerProps) => <DreamDictionary {...routerProps}/>}/>
-          <Route path="/sign_up"
-            render={(routerProps) => <SignUpForm setCurrentUser={this.setCurrentUser} {...routerProps}/>}/>
-          <Route path="/login"
-            render={(routerProps) => <LoginForm setCurrentUser={this.setCurrentUser} {...routerProps} />} />
-          <Route render={() => <Redirect to='/dream_dictionary'/>}/>
-        </Switch>
-      </div>
+        <Container>
+          <Switch>
+            <Route path="/post_dream" component={DreamForm} />
+            <Route path="/users/:id" component={Profile} />
+            <Route path="/dream_dictionary/:letter"
+              render={(routerProps) => <DreamDictionary {...routerProps}/>}/>
+            <Route path="/dream_dictionary"
+              render={(routerProps) => <DreamDictionary {...routerProps}/>}/>
+            <Route path="/sign_up"
+              render={(routerProps) => <SignUpForm setCurrentUser={this.setCurrentUser} {...routerProps}/>}/>
+            <Route path="/login"
+              render={(routerProps) => <LoginForm setCurrentUser={this.setCurrentUser} {...routerProps} />} />
+            <Route path="/" component={DreamFeed} />
+            <Route render={() => <Redirect to='/'/>}/>
+          </Switch>
+        </Container>
+      </React.Fragment>
     );
   }
 

@@ -1,10 +1,28 @@
 import React from 'react'
-import { Form, Button } from 'semantic-ui-react'
+import { Form, Button, Container } from 'semantic-ui-react'
 
 class LoginForm extends React.Component {
 	state = {
 		username: "",
 		password: "",
+	}
+
+	render(){
+		return (
+			<Container text>
+				<Form onSubmit={this.handleSubmit}>
+					<Form.Field>
+						<label>Username</label>
+						<input onChange={this.handleChange} name="username" value={this.state.username} placeholder='Username' />
+					</Form.Field>
+					<Form.Field>
+						<label>Password</label>
+						<input onChange={this.handleChange} type="password" name="password" value={this.state.password} placeholder='Password' />
+					</Form.Field>
+					<Button type='submit'>Submit</Button>
+				</Form>
+			</Container>
+		)
 	}
 
 	handleChange = (event) => {
@@ -32,22 +50,6 @@ class LoginForm extends React.Component {
 			}
 
 		})
-	}
-
-	render(){
-		return (
-			<Form onSubmit={this.handleSubmit}>
-		    <Form.Field>
-		      <label>Username</label>
-		      <input onChange={this.handleChange} name="username" value={this.state.username} placeholder='Username' />
-		    </Form.Field>
-		    <Form.Field>
-		      <label>Password</label>
-		      <input onChange={this.handleChange} type="password" name="password" value={this.state.password} placeholder='Password' />
-		    </Form.Field>
-		    <Button type='submit'>Submit</Button>
-		  </Form>
-		)
 	}
 }
 
