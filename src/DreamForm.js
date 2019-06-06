@@ -10,10 +10,16 @@ class DreamForm extends React.Component {
     stateOfMind: "",
     dream: "",
     tagOptions: [],
-    tags: []
+    tags: [],
+    currentValues: []
   }
 
   componentDidMount() {
+    fetch("http://localhost:3000/dream_tags")
+    .then(res => res.json())
+    .then(interpretations => this.setState({
+      tagOptions: this.generateDropdownOptions(interpretations)
+    }));
     const d = new Date();
     let yesterday = d.getDate() - 1
     if (yesterday < 10) {
@@ -27,6 +33,10 @@ class DreamForm extends React.Component {
     this.setState({
       date: defaultDate
     })
+  }
+
+  generateDropdownOptions(tags) {
+    return tags.map(tag => {return { key: tag.tag_name, text: tag.tag_name, value: tag.id }})
   }
 
   render() {
@@ -83,7 +93,7 @@ class DreamForm extends React.Component {
               fluid
               multiple
               allowAdditions
-              value={this.state.tags}
+              value={this.state.currentValues}
               onAddItem={this.handleAddition}
               onChange={this.handleChange}
             />
@@ -102,7 +112,7 @@ class DreamForm extends React.Component {
 
   handleAddition = (e, { value }) => {
     this.setState(prevState => ({
-      options: [{ text: value, value }, ...prevState.options],
+      tags: [{ text: value, value }, ...prevState.options],
     }))
   }
 
