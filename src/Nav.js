@@ -42,11 +42,20 @@ export default class Nav extends Component {
         />
         <Menu.Menu position='right'>
           {this.props.currentUser ?
-            <Menu.Item
-              name='logout'
-              active={activeItem === 'logout'}
-              onClick={this.props.logOut}
+            <React.Fragment>
+              <Menu.Item
+                name='profile'
+                active={activeItem === 'profile'}
+                as={ Link }
+                to={`/user/${this.props.currentUser}`}
+                onClick={(e, data) => this.setState({activeItem: data.name})}
               />
+              <Menu.Item
+                name='logout'
+                active={activeItem === 'logout'}
+                onClick={this.props.logOut}
+              />
+            </React.Fragment>
             :
             <React.Fragment>
               <Menu.Item
