@@ -18,7 +18,6 @@ class DreamForm extends React.Component {
       month = "0"+month
     }
     let defaultDate = yesterday + "-" + month + "-" + d.getFullYear()
-    console.log(defaultDate)
     this.setState({
       date: defaultDate
     })
@@ -48,10 +47,9 @@ class DreamForm extends React.Component {
   }
 
   handleChange = (event, {name, value}) => {
-    console.log(value)
-   if (this.state.hasOwnProperty(name)) {
-     this.setState({ [name]: value });
-   }
+    if (this.state.hasOwnProperty(name)) {
+      this.setState({ [name]: value });
+    }
  }
 }
 
