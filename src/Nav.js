@@ -19,6 +19,7 @@ export default class Nav extends Component {
     return (
       <Menu pointing secondary>
         <Menu.Item name='dream_feed' as={ Link } to="/dream_feed" active={activeItem === 'dream_feed'} />
+        <Menu.Item name='post_dream' as={ Link } to="/post_dream" active={activeItem === 'post_dream'} />
         <Menu.Item
           name='dream_dictionary'
           active={activeItem === 'dream_dictionary'}

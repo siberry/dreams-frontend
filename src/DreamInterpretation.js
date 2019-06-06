@@ -10,7 +10,7 @@ class DreamInterpretation extends React.Component {
     return (
       <Card onClick={null /*this.handleCardClick */}>
         <Button color="grey" content={this.props.displayName}/>
-        <Image src={this.props.img_url} wrapped ui={false}/>
+        <Image src={this.props.img_url && this.props.img_url.length > 0 ? this.props.img_url : "https://d32dm0rphc51dk.cloudfront.net/y-A5_Pp8nxYiCor6mwkUKg/square.jpg"} wrapped ui={false}/>
 
         <Button onClick={() => this.handleClick("change")}>Find a new image</Button>
         {/*

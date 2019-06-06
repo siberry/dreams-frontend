@@ -5,6 +5,7 @@ import SignUpForm from './SignUpForm'
 import LoginForm from './LoginForm'
 import Nav from './Nav'
 import Profile from './Profile'
+import DreamForm from './DreamForm'
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 class App extends React.Component {
@@ -44,9 +45,10 @@ class App extends React.Component {
         <Route path="/"
           render={(routerProps) => <Nav {...routerProps} currentUser={this.state.currentUser} logOut={this.logOut}/>}/>
         <Switch>
+          <Route path="/post_dream" component={DreamForm} />
           <Route path="/users/:id" component={Profile} />
-            <Route path="/dream_dictionary/:letter"
-              render={(routerProps) => <DreamDictionary {...routerProps}/>}/>
+          <Route path="/dream_dictionary/:letter"
+            render={(routerProps) => <DreamDictionary {...routerProps}/>}/>
           <Route path="/dream_dictionary"
             render={(routerProps) => <DreamDictionary {...routerProps}/>}/>
           <Route path="/sign_up"
