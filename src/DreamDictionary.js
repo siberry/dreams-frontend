@@ -6,7 +6,7 @@ import { Card, Menu, Divider } from 'semantic-ui-react'
 class DreamDictionary extends React.Component {
   state = {
     interpretations: [],
-    selectedLetter: null
+    selectedLetter: this.props.match.params.letter
   }
 
   componentDidMount() {
@@ -19,7 +19,7 @@ class DreamDictionary extends React.Component {
 
   render() {
     const {selectedLetter, interpretations} = this.state
-    const displayInterpretations = selectedLetter ? interpretations.filter(interpretation => interpretation.tag_name.startsWith(selectedLetter)) : interpretations
+    const displayInterpretations = selectedLetter ? interpretations.filter(interpretation => interpretation.tag_name.startsWith(selectedLetter.toUpperCase())) : interpretations
     return (
       <React.Fragment>
         <Menu pagination>
@@ -32,12 +32,17 @@ class DreamDictionary extends React.Component {
   }
 
   renderDreamInterpretations(arr) {
-    return arr.map(interpretation => <DreamInterpretation key={interpretation.id} {...interpretation}/>)
+    return arr.map(interpretation => {
+      const displayName = interpretation.tag_name.length < 25 ? interpretation.tag_name : interpretation.tag_name.split(" ").slice(0,3).join(" ")
+      return <DreamInterpretation key={interpretation.id} displayName={displayName} {...interpretation}/>
+      })
   }
 
   handleLetterClick = (selectedLetter) => {
     this.setState({
       selectedLetter
+    }, () => {
+      this.props.history.push(`/dream_dictionary/${selectedLetter}`)
     })
   }
 }

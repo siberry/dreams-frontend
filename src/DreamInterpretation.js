@@ -9,7 +9,7 @@ class DreamInterpretation extends React.Component {
   render() {
     return (
       <Card onClick={null /*this.handleCardClick */}>
-        <Button color="grey" content={this.props.tag_name}/>
+        <Button color="grey" content={this.props.displayName}/>
         <Image src={this.props.img_url} wrapped ui={false}/>
 
         <Button onClick={() => this.handleClick("change")}>Find a new image</Button>
