@@ -31,3 +31,12 @@
     transform: rotate(360deg);
   }
 }
+
+.dictionary {
+  display: grid;
+  grid-template-areas: 'item item item item';
+}
+
+.ui.pagination.menu .item {
+  min-width: 0em;
+}

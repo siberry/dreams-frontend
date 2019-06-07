@@ -1,41 +1,66 @@
 import React from 'react'
 import DreamInterpretation from './DreamInterpretation'
-import { Card, Menu, Divider, Container, Loader, Dimmer } from 'semantic-ui-react'
+import DreamDefinition from './DreamDefinition'
+import ComplexButton from './ComplexButton'
+import { Card, Menu, Divider, Container, Loader, Dimmer, Grid } from 'semantic-ui-react'
 
 
 class DreamDictionary extends React.Component {
   state = {
-    // interpretations: [],
-    selectedLetter: this.props.match.params.letter
+    selectedLetter: this.props.match.params.letter,
+    clickedTerm: undefined
   }
 
   render() {
-    const {selectedLetter} = this.state
+    const {selectedLetter, clickedTerm} = this.state
     const {interpretations} = this.props
     const displayInterpretations = selectedLetter ? interpretations.filter(interpretation => interpretation.tag_name.startsWith(selectedLetter.toUpperCase())) : interpretations
     return (
-      <Container>
       <Dimmer.Dimmable>
+      <Container>
         <Menu pagination>
           {("ABCDEFGHIJKLMNOPQRSTUVWXYZ").split("").map(letter => <Menu.Item key={letter} name={letter} active={selectedLetter === letter} onClick={(e,data) => this.handleLetterClick(data.name)} />)}
         </Menu>
+        {clickedTerm ?
+          <React.Fragment>
+            <Divider />
+            <DreamDefinition clickedTerm={this.state.clickedTerm}/>
+          </React.Fragment>
+          :
+          null
+        }
         <Divider />
 
-      {this.props.loading ? <Container><Dimmer active inverted><Loader inline="centered" size='large' inverted>Loading</Loader></Dimmer></Container>
+      {this.props.loading ?
+        <Container>
+          <Dimmer active inverted>
+            <Loader inline="centered" size='large' inverted>
+              Loading
+            </Loader>
+          </Dimmer>
+        </Container>
           :
-          <Card.Group itemsPerRow={5}>{this.renderDreamInterpretations(displayInterpretations)}</ Card.Group>
+          <div className="dictionary">
+            {this.renderDreamInterpretations(displayInterpretations)}
+          </ div>
         }
 
-        </Dimmer.Dimmable>
       </Container>
+      </Dimmer.Dimmable>
     )
   }
 
   renderDreamInterpretations(arr) {
     return arr.map(interpretation => {
-      const displayName = interpretation.tag_name.length < 25 ? interpretation.tag_name : interpretation.tag_name.split(" ").slice(0,3).join(" ")
-      return <DreamInterpretation key={interpretation.id} displayName={displayName} {...interpretation}/>
-      })
+      const displayName = interpretation.tag_name.length < 25 ?
+        interpretation.tag_name : interpretation.tag_name.split(" ").slice(0,3).join(" ")
+      return <ComplexButton
+        key={interpretation.id}
+        displayName={displayName}
+        setClickedTerm={this.setClickedTerm}
+        {...interpretation}
+        />
+    })
   }
 
   handleLetterClick = (selectedLetter) => {
@@ -43,6 +68,12 @@ class DreamDictionary extends React.Component {
       selectedLetter
     }, () => {
       this.props.history.push(`/dream_dictionary/${selectedLetter}`)
+    })
+  }
+
+  setClickedTerm = (clickedTerm) => {
+    this.setState({
+      clickedTerm
     })
   }
 }

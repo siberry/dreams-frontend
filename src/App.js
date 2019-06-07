@@ -58,8 +58,6 @@ class App extends React.Component {
         render={(routerProps) => <Nav {...routerProps} currentUser={this.state.currentUser} logOut={this.logOut}/>}
         />
 
-
-        <Container>
           <Switch>
             <Route
               path="/post_dream"
@@ -77,7 +75,7 @@ class App extends React.Component {
             <Route path="/" component={DreamFeed} />
             <Route render={() => <Redirect to='/'/>}/>
           </Switch>
-        </Container>
+      
       </React.Fragment>
     );
   }
