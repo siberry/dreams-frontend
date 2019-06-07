@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, Image, Button } from 'semantic-ui-react'
 
-class DreamTagFront extends React.Component {
+class DreamInterpretation extends React.Component {
   state = {
     clicked: false
   }
@@ -12,8 +12,8 @@ class DreamTagFront extends React.Component {
         <Button color="grey" content={this.props.displayName}/>
         <Image src={this.props.img_url && this.props.img_url.length > 0 ? this.props.img_url : "https://d32dm0rphc51dk.cloudfront.net/y-A5_Pp8nxYiCor6mwkUKg/square.jpg"} wrapped ui={false}/>
 
-        <Button onClick={() => this.handleClick("change")}>Find a new image</Button>
         {/*
+          <Button onClick={() => this.handleClick("change")}>Find a new image</Button>
           <Button onClick={() => this.handleClick("dontChange")}>Image is perfect</Button>
           <strong>
           //   {this.props.tag_name}
@@ -42,4 +42,4 @@ class DreamTagFront extends React.Component {
   }
 }
 
-export default DreamTagFront
+export default DreamInterpretation

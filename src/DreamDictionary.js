@@ -1,5 +1,5 @@
 import React from 'react'
-import DreamTagFront from './DreamTagFront'
+import DreamInterpretation from './DreamInterpretation'
 import { Card, Menu, Divider, Container } from 'semantic-ui-react'
 
 
@@ -35,7 +35,7 @@ class DreamDictionary extends React.Component {
   renderDreamInterpretations(arr) {
     return arr.map(interpretation => {
       const displayName = interpretation.tag_name.length < 25 ? interpretation.tag_name : interpretation.tag_name.split(" ").slice(0,3).join(" ")
-      return <DreamTagFront key={interpretation.id} displayName={displayName} {...interpretation}/>
+      return <DreamInterpretation key={interpretation.id} displayName={displayName} {...interpretation}/>
       })
   }
 
