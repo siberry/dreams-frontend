@@ -5,21 +5,22 @@ import { Form, Container, Divider, Button, Dropdown } from 'semantic-ui-react'
 class DreamForm extends React.Component {
   state = {
     date: '',
-    hoursSlept: "",
-    sleepQuality: "",
-    stateOfMind: "",
+    hours_slept: "",
+    quality: "",
+    state_of_mind: "",
     dream: "",
     tagOptions: [],
-    tags: [],
-    currentValues: []
+    tags: []
   }
 
   componentDidMount() {
     fetch("http://localhost:3000/dream_tags")
     .then(res => res.json())
-    .then(interpretations => this.setState({
-      tagOptions: this.generateDropdownOptions(interpretations)
-    }));
+    .then(interpretations => {
+      this.setState({
+        tagOptions: this.generateDropdownOptions(interpretations)
+      })
+    });
     const d = new Date();
     let yesterday = d.getDate() - 1
     if (yesterday < 10) {
@@ -42,11 +43,12 @@ class DreamForm extends React.Component {
   render() {
     return(
       <Container text>
-        <Form >
+        <Form onSubmit={this.handleSubmit}>
           <Form.Field>
             <label>Date</label>
             <DateInput
               name="date"
+              closable
               placeholder="Date"
               value={this.state.date}
               iconPosition="left"
@@ -56,6 +58,8 @@ class DreamForm extends React.Component {
           <Form.Field >
             <label>Hours Slept</label>
             <Form.Input
+              name="hours_slept"
+              min="0"
               type="number"
               placeholder="Hours Slept"
               value={this.state.hoursSlept}
@@ -65,6 +69,7 @@ class DreamForm extends React.Component {
           <Form.Field>
             <label>Sleep Quality</label>
             <Form.Input
+              name="quality"
               placeholder="Sleep Quality"
               value={this.state.sleepQuality}
               onChange={this.handleChange}
@@ -73,6 +78,7 @@ class DreamForm extends React.Component {
           <Form.Field >
             <label>State of Mind</label>
             <Form.Input
+              name="state_of_mind"
               placeholder="What's been on your mind? What's been inspiring you?"
               value={this.state.stateOfMind}
               onChange={this.handleChange}
@@ -81,6 +87,7 @@ class DreamForm extends React.Component {
           <Divider />
           <Form.TextArea
             placeholder="Dream..."
+            name="dream"
             value={this.state.dream}
             onChange={this.handleChange}
             rows={8}
@@ -88,12 +95,16 @@ class DreamForm extends React.Component {
             <Dropdown
               options={this.state.tagOptions}
               placeholder='dream tags'
+              name="tags"
+              clearable
+              scrolling
+              closeOnBlur
               search
               selection
               fluid
               multiple
+              value={this.state.tags}
               allowAdditions
-              value={this.state.currentValues}
               onAddItem={this.handleAddition}
               onChange={this.handleChange}
             />
@@ -102,6 +113,21 @@ class DreamForm extends React.Component {
         </Form>
       </Container>
     )
+    /*
+       */
+  }
+
+  handleSubmit = () => {
+    const {date, hours_slept, quality, state_of_mind, dream, tags} = this.state
+    const user_id = this.props.currentUser.id
+    fetch('http://localhost:3000/dreams', {
+      method: "POST",
+      headers: {
+        'Content-Type': "application/json",
+        'Accept': "application/json"
+      },
+      body: JSON.stringify({dream: {date, hours_slept, quality, state_of_mind, dream, user_id}, tags})
+    })
   }
 
   handleChange = (event, {name, value}) => {
@@ -115,8 +141,6 @@ class DreamForm extends React.Component {
       tagOptions: [{ text: value, value }, ...prevState.tagOptions],
     }))
   }
-
-  handleChange = (e, { value }) => this.setState({ currentValues: value })
 }
 
 export default DreamForm

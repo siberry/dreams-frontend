@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, Image, Button } from 'semantic-ui-react'
 
-class DreamInterpretation extends React.Component {
+class DreamTagFront extends React.Component {
   state = {
     clicked: false
   }
@@ -42,4 +42,4 @@ class DreamInterpretation extends React.Component {
   }
 }
 
-export default DreamInterpretation
+export default DreamTagFront

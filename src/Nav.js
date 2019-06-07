@@ -37,7 +37,7 @@ export default class Nav extends Component {
           name='dream_dictionary'
           active={activeItem === 'dream_dictionary'}
           as={ Link }
-          to="/dream_dictionary"
+          to="/dream_dictionary/a"
           onClick={(e, data) => this.setState({activeItem: data.name})}
         />
         <Menu.Menu position='right'>

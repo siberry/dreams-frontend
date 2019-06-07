@@ -45,10 +45,14 @@ class App extends React.Component {
     return (
       <React.Fragment>
         <Route path="/"
-          render={(routerProps) => <Nav {...routerProps} currentUser={this.state.currentUser} logOut={this.logOut}/>}/>
+          render={(routerProps) => <Nav {...routerProps} currentUser={this.state.currentUser} logOut={this.logOut}/>}
+          />
         <Container>
           <Switch>
-            <Route path="/post_dream" component={DreamForm} />
+            <Route
+              path="/post_dream"
+              render={(routerProps) => <DreamForm {...routerProps} currentUser={this.state.currentUser}/>}
+              />
             <Route path="/users/:id" component={Profile} />
             <Route path="/dream_dictionary/:letter"
               render={(routerProps) => <DreamDictionary {...routerProps}/>}/>
