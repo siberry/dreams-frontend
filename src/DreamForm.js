@@ -91,7 +91,6 @@ class DreamForm extends React.Component {
               placeholder='dream tags'
               name="tags"
               clearable
-              defaultUpward={false}
               upward={false}
               scrolling
               closeOnBlur

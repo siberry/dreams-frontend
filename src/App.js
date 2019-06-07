@@ -54,9 +54,11 @@ class App extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <Route path="/"
-          render={(routerProps) => <Nav {...routerProps} currentUser={this.state.currentUser} logOut={this.logOut}/>}
-          />
+      <Route path="/"
+        render={(routerProps) => <Nav {...routerProps} currentUser={this.state.currentUser} logOut={this.logOut}/>}
+        />
+
+
         <Container>
           <Switch>
             <Route

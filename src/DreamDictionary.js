@@ -1,6 +1,6 @@
 import React from 'react'
 import DreamInterpretation from './DreamInterpretation'
-import { Card, Menu, Divider, Container } from 'semantic-ui-react'
+import { Card, Menu, Divider, Container, Loader, Dimmer } from 'semantic-ui-react'
 
 
 class DreamDictionary extends React.Component {
@@ -8,21 +8,25 @@ class DreamDictionary extends React.Component {
     // interpretations: [],
     selectedLetter: this.props.match.params.letter
   }
-  
+
   render() {
     const {selectedLetter} = this.state
     const {interpretations} = this.props
     const displayInterpretations = selectedLetter ? interpretations.filter(interpretation => interpretation.tag_name.startsWith(selectedLetter.toUpperCase())) : interpretations
     return (
       <Container>
+      <Dimmer.Dimmable>
         <Menu pagination>
           {("ABCDEFGHIJKLMNOPQRSTUVWXYZ").split("").map(letter => <Menu.Item key={letter} name={letter} active={selectedLetter === letter} onClick={(e,data) => this.handleLetterClick(data.name)} />)}
         </Menu>
         <Divider />
-      {this.props.loading ? <h1>Loading</h1>
+
+      {this.props.loading ? <Container><Dimmer active inverted><Loader inline="centered" size='large' inverted>Loading</Loader></Dimmer></Container>
           :
           <Card.Group itemsPerRow={5}>{this.renderDreamInterpretations(displayInterpretations)}</ Card.Group>
         }
+
+        </Dimmer.Dimmable>
       </Container>
     )
   }
