@@ -5,21 +5,13 @@ import { Card, Menu, Divider, Container } from 'semantic-ui-react'
 
 class DreamDictionary extends React.Component {
   state = {
-    interpretations: [],
+    // interpretations: [],
     selectedLetter: this.props.match.params.letter
   }
-
-  componentDidMount() {
-    fetch("http://localhost:3000/dream_tags")
-    .then(res => res.json())
-    .then(interpretations => this.setState({
-      interpretations,
-      selectedLetter: this.props.match.params.letter
-    }))
-  }
-
+  
   render() {
-    const {selectedLetter, interpretations} = this.state
+    const {selectedLetter} = this.state
+    const {interpretations} = this.props
     const displayInterpretations = selectedLetter ? interpretations.filter(interpretation => interpretation.tag_name.startsWith(selectedLetter.toUpperCase())) : interpretations
     return (
       <Container>
@@ -27,7 +19,10 @@ class DreamDictionary extends React.Component {
           {("ABCDEFGHIJKLMNOPQRSTUVWXYZ").split("").map(letter => <Menu.Item key={letter} name={letter} active={selectedLetter === letter} onClick={(e,data) => this.handleLetterClick(data.name)} />)}
         </Menu>
         <Divider />
-        <Card.Group itemsPerRow={5}>{this.renderDreamInterpretations(displayInterpretations)}</ Card.Group>
+      {this.props.loading ? <h1>Loading</h1>
+          :
+          <Card.Group itemsPerRow={5}>{this.renderDreamInterpretations(displayInterpretations)}</ Card.Group>
+        }
       </Container>
     )
   }

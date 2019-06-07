@@ -12,12 +12,22 @@ import { Container } from 'semantic-ui-react'
 
 class App extends React.Component {
   state = {
-		currentUser: null
+		currentUser: null,
+    interpretations: [],
+    loading: true
 	}
 
   componentDidMount(){
-		const token = localStorage.getItem("token")
+    fetch("http://localhost:3000/dream_tags")
+    .then(res => res.json())
+    .then(interpretations => {
+      this.setState({
+        interpretations,
+        loading: false
+      })
+    });
 
+		const token = localStorage.getItem("token")
  		if (token){
 			fetch('http://localhost:3000/auto_login', {
 				headers: {
@@ -51,13 +61,13 @@ class App extends React.Component {
           <Switch>
             <Route
               path="/post_dream"
-              render={(routerProps) => <DreamForm {...routerProps} currentUser={this.state.currentUser}/>}
+              render={(routerProps) => <DreamForm {...routerProps} loading={this.state.loading} interpretations={this.state.interpretations} currentUser={this.state.currentUser}/>}
               />
             <Route path="/users/:id" component={Profile} />
             <Route path="/dream_dictionary/:letter"
-              render={(routerProps) => <DreamDictionary {...routerProps}/>}/>
+              render={(routerProps) => <DreamDictionary loading={this.state.loading} interpretations={this.state.interpretations} {...routerProps}/>}/>
             <Route path="/dream_dictionary"
-              render={(routerProps) => <DreamDictionary {...routerProps}/>}/>
+              render={(routerProps) => <DreamDictionary loading={this.state.loading} interpretations={this.state.interpretations} {...routerProps}/>}/>
             <Route path="/sign_up"
               render={(routerProps) => <SignUpForm setCurrentUser={this.setCurrentUser} {...routerProps}/>}/>
             <Route path="/login"

@@ -9,18 +9,10 @@ class DreamForm extends React.Component {
     quality: "",
     state_of_mind: "",
     dream: "",
-    tagOptions: [],
-    tags: []
+    tags: [],
   }
 
   componentDidMount() {
-    fetch("http://localhost:3000/dream_tags")
-    .then(res => res.json())
-    .then(interpretations => {
-      this.setState({
-        tagOptions: this.generateDropdownOptions(interpretations)
-      })
-    });
     const d = new Date();
     let yesterday = d.getDate() - 1
     if (yesterday < 10) {
@@ -41,6 +33,7 @@ class DreamForm extends React.Component {
   }
 
   render() {
+    console.log(this.state)
     return(
       <Container text>
         <Form onSubmit={this.handleSubmit}>
@@ -93,17 +86,22 @@ class DreamForm extends React.Component {
             rows={8}
             />
             <Dropdown
-              options={this.state.tagOptions}
+              compact
+              options={this.generateDropdownOptions(this.props.interpretations)}
               placeholder='dream tags'
               name="tags"
               clearable
+              defaultUpward={false}
+              upward={false}
               scrolling
               closeOnBlur
               search
               selection
               fluid
               multiple
+              closeOnChange
               value={this.state.tags}
+              loading={this.props.loading}
               allowAdditions
               onAddItem={this.handleAddition}
               onChange={this.handleChange}
@@ -113,8 +111,6 @@ class DreamForm extends React.Component {
         </Form>
       </Container>
     )
-    /*
-       */
   }
 
   handleSubmit = () => {
