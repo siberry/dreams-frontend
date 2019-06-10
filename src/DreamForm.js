@@ -30,9 +30,7 @@ class DreamForm extends React.Component {
     if (this.props.match.params.id) {
       fetch(`http://localhost:3000/dreams/${this.props.match.params.id}`)
       .then(res => res.json())
-      .then(dream =>
-        {console.log(dream);
-        this.setState({
+      .then(dream => this.setState({
           id: dream.id,
           date: dream.date,
           dream: dream.dream,
@@ -40,8 +38,7 @@ class DreamForm extends React.Component {
           hours_slept: dream.hours_slept,
           quality: dream.quality,
           state_of_mind: dream.state_of_mind
-        })}
-      )
+        }))
     }
   }
 
