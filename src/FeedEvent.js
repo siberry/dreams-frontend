@@ -8,7 +8,7 @@ export default function FeedEvent(props) {
       <Feed.Label image={props.avatar ? props.avatar : ""}/>
       <Feed.Content>
         <Feed.Summary>
-          <Feed.User content={props.user.username} as={ Link } to={props.currentUser.id === props.user.id ? "/profile" : `/user/${props.user.id}`}/>
+          <Feed.User content={props.user.username} as={ Link } to={`/user/${props.user.id}`}/>
           <Feed.Date>{props.date}</Feed.Date>
         </Feed.Summary>
         <Feed.Extra text>

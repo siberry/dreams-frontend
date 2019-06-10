@@ -4,7 +4,6 @@ import DreamDictionary from './DreamDictionary'
 import SignUpForm from './SignUpForm'
 import LoginForm from './LoginForm'
 import Nav from './Nav'
-import Profile from './Profile'
 import DreamForm from './DreamForm'
 import DreamFeed from './DreamFeed'
 import { Route, Switch, Redirect, } from 'react-router-dom';
@@ -61,26 +60,17 @@ class App extends React.Component {
 
           <Switch>
             <Route exact path="/"
-              render={(routerProps) => <DreamFeed loading={this.state.loading} feedToDisplay="global" currentUser={currentUser} {...routerProps}/>} />
+              render={(routerProps) => <DreamFeed loading={this.state.loading} feedToDisplay="global" {...routerProps}/>} />
             <Route
               path="/post_dream"
               render={(routerProps) => <DreamForm {...routerProps} loading={this.state.loading} interpretations={this.state.interpretations} currentUser={currentUser}/>}
               />
             <Route path="/user/:id"
-              render={(routerProps) => <DreamFeed {...routerProps} feedToDisplay={"user"}  currentUser={this.state.currentUser}/>} />
+              render={(routerProps) => <DreamFeed {...routerProps} feedToDisplay={"user"}/>} />
             <Route path="/dream_dictionary/:letter"
               render={(routerProps) => <DreamDictionary loading={this.state.loading} interpretations={this.state.interpretations} {...routerProps}/>}/>
             <Route path="/dream_dictionary"
               render={(routerProps) => <DreamDictionary loading={this.state.loading} interpretations={this.state.interpretations} {...routerProps}/>}/>
-            <Route path="/profile"
-              render={(routerProps) => {
-                return this.state.currentUser ?
-                  <Profile currentUser={currentUser}  {...routerProps}/>
-                  :
-                  <Redirect to='/' />
-                }
-              }
-            />
             <Route path="/sign_up"
               render={(routerProps) => <SignUpForm setCurrentUser={this.setCurrentUser} {...routerProps}/>}/>
             <Route path="/login"

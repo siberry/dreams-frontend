@@ -9,7 +9,18 @@ class DreamFeed extends React.Component {
     dreams: undefined
   }
 
-  componentDidMount() {
+  componentDidUpdate(prevProps) {
+    if (this.props.match.params.id !== prevProps.match.params.id){
+      this.fetchFeed()
+    }
+  }
+
+  componentDidMount(){
+    this.fetchFeed()
+
+  }
+
+  fetchFeed = () => {
     const backendUrl = this.getBackendUrl()
     fetch(backendUrl)
     .then(res => res.json())
@@ -20,8 +31,6 @@ class DreamFeed extends React.Component {
 
   getBackendUrl() {
     switch (this.props.feedToDisplay) {
-      case "currentUser":
-        return `http://localhost:3000/users/${this.props.userId}/dreams`
       case "user":
         return `http://localhost:3000/users/${this.props.match.params.id}/dreams`
       default:
@@ -30,10 +39,11 @@ class DreamFeed extends React.Component {
   }
 
   renderDreamFeed() {
-    return this.state.dreams.map(dream => <FeedEvent key={dream.id} {...dream} currentUser={this.props.currentUser}/>)
+    return this.state.dreams.map(dream => <FeedEvent key={dream.id} {...dream} />)
   }
 
   render() {
+    console.log("rendering dreamFeed")
     return (
       <Feed>
         {this.state.dreams ? this.renderDreamFeed() : null}
