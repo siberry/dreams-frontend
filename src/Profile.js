@@ -4,7 +4,7 @@ import DreamFeed from './DreamFeed'
 class Profile extends React.Component {
   render() {
     return(
-      <DreamFeed />
+      <DreamFeed feedToDisplay={"currentUser"} currentUser={this.props.currentUser}/>
     )
   }
 }

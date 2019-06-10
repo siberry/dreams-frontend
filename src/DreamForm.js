@@ -33,7 +33,6 @@ class DreamForm extends React.Component {
   }
 
   render() {
-    console.log(this.state)
     return(
       <Container text>
         <Form onSubmit={this.handleSubmit}>
@@ -123,6 +122,8 @@ class DreamForm extends React.Component {
       },
       body: JSON.stringify({dream: {date, hours_slept, quality, state_of_mind, dream, user_id}, tags})
     })
+    .then(res => res.json())
+    .then(() => this.props.history.push(`/user/${user_id}`))
   }
 
   handleChange = (event, {name, value}) => {

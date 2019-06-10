@@ -16,7 +16,7 @@ export default class Nav extends Component {
 
   render() {
     const { activeItem } = this.state
-
+    console.log(activeItem, this.props.currentUser)
     return (
       <Menu pointing secondary>
         <Menu.Item
@@ -45,9 +45,9 @@ export default class Nav extends Component {
             <React.Fragment>
               <Menu.Item
                 name='profile'
-                active={activeItem === 'profile'}
+                active={activeItem === "profile"}
                 as={ Link }
-                to={`/user/${this.props.currentUser}`}
+                to="/profile"
                 onClick={(e, data) => this.setState({activeItem: data.name})}
               />
               <Menu.Item

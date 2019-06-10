@@ -43,7 +43,7 @@ class App extends React.Component {
 						currentUser: response
 					}, () => {
             if (this.props.history) {
-              this.props.history.push(`/users/${response.id}`)
+              this.props.history.push(`/user/${response.id}`)
             }
 					})
 				}
@@ -52,6 +52,7 @@ class App extends React.Component {
 	}
 
   render() {
+    const {currentUser} = this.state
     return (
       <React.Fragment>
       <Route path="/"
@@ -59,21 +60,31 @@ class App extends React.Component {
         />
 
           <Switch>
+            <Route exact path="/"
+              render={(routerProps) => <DreamFeed loading={this.state.loading} feedToDisplay="global" currentUser={currentUser} {...routerProps}/>} />
             <Route
               path="/post_dream"
-              render={(routerProps) => <DreamForm {...routerProps} loading={this.state.loading} interpretations={this.state.interpretations} currentUser={this.state.currentUser}/>}
+              render={(routerProps) => <DreamForm {...routerProps} loading={this.state.loading} interpretations={this.state.interpretations} currentUser={currentUser}/>}
               />
-            <Route path="/users/:id" component={Profile} />
+            <Route path="/user/:id"
+              render={(routerProps) => <DreamFeed {...routerProps} feedToDisplay={"user"}  currentUser={this.state.currentUser}/>} />
             <Route path="/dream_dictionary/:letter"
               render={(routerProps) => <DreamDictionary loading={this.state.loading} interpretations={this.state.interpretations} {...routerProps}/>}/>
             <Route path="/dream_dictionary"
               render={(routerProps) => <DreamDictionary loading={this.state.loading} interpretations={this.state.interpretations} {...routerProps}/>}/>
+            <Route path="/profile"
+              render={(routerProps) => {
+                return this.state.currentUser ?
+                  <Profile currentUser={currentUser}  {...routerProps}/>
+                  :
+                  <Redirect to='/' />
+                }
+              }
+            />
             <Route path="/sign_up"
               render={(routerProps) => <SignUpForm setCurrentUser={this.setCurrentUser} {...routerProps}/>}/>
             <Route path="/login"
               render={(routerProps) => <LoginForm setCurrentUser={this.setCurrentUser} {...routerProps} />} />
-            <Route path="/"
-              render={(routerProps) => <DreamFeed loading={this.state.loading} feedToDisplay="global" {...routerProps}/>} />
             <Route render={() => <Redirect to='/'/>}/>
           </Switch>
 
