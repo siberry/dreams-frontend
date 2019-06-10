@@ -65,10 +65,10 @@ class App extends React.Component {
               path="/post_dream"
               render={(routerProps) => <DreamForm {...routerProps} loading={this.state.loading} interpretations={this.state.interpretations} currentUser={currentUser}/>}
               />
-              <Route
-                path="/dream/:id"
-                render={(routerProps) => <DreamForm {...routerProps} loading={this.state.loading} interpretations={this.state.interpretations} currentUser={currentUser}/>}
-                />
+            <Route
+              path="/dream/:id"
+              render={(routerProps) => <DreamForm {...routerProps} loading={this.state.loading} interpretations={this.state.interpretations} currentUser={currentUser}/>}
+              />
             <Route path="/user/:id"
               render={(routerProps) => <DreamFeed {...routerProps} feedToDisplay={"user"}/>} />
             <Route path="/dream_dictionary/:letter"

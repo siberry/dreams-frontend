@@ -1,6 +1,7 @@
 import React from 'react'
 import { DateInput } from 'semantic-ui-calendar-react';
 import { Form, Container, Divider, Button, Dropdown } from 'semantic-ui-react'
+import { Redirect, } from 'react-router-dom';
 
 class DreamForm extends React.Component {
   state = {
@@ -47,80 +48,86 @@ class DreamForm extends React.Component {
   }
 
   render() {
-    return(
-      <Container text>
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Field>
-            <label>Date</label>
-            <DateInput
-              name="date"
-              closable
-              placeholder="Date"
-              value={this.state.date}
-              iconPosition="left"
-              onChange={this.handleChange}
-              />
-          </Form.Field>
-          <Form.Field >
-            <label>Hours Slept</label>
-            <Form.Input
-              name="hours_slept"
-              min="0"
-              type="number"
-              placeholder="Hours Slept"
-              value={this.state.hours_slept}
-              onChange={this.handleChange}
-              />
-          </Form.Field>
-          <Form.Field>
-            <label>Sleep Quality</label>
-            <Form.Input
-              name="quality"
-              placeholder="Sleep Quality"
-              value={this.state.quality}
-              onChange={this.handleChange}
-              />
-          </Form.Field>
-          <Form.Field >
-            <label>State of Mind</label>
-            <Form.Input
-              name="state_of_mind"
-              placeholder="What's been on your mind? What's been inspiring you?"
-              value={this.state.state_of_mind}
-              onChange={this.handleChange}
-            />
-          </Form.Field>
-          <Divider />
-          <Form.TextArea
-            placeholder="Dream..."
-            name="dream"
-            value={this.state.dream}
-            onChange={this.handleChange}
-            rows={8}
-            />
-            <Dropdown
-              compact
-              options={this.generateDropdownOptions(this.props.interpretations)}
-              placeholder='dream tags'
-              name="tags"
-              clearable
-              upward={false}
-              scrolling
-              closeOnBlur
-              search
-              selection
-              fluid
-              multiple
-              closeOnChange
-              value={this.state.tags}
-              loading={this.props.loading}
-              onAddItem={this.handleAddition}
-              onChange={this.handleChange}
-            />
-          <Divider />
-          <Button type='submit'>Submit</Button>
-        </Form>
-      </Container>
+    return (
+      <React.Fragment>
+        {this.props.currentUser ?
+          <Container text>
+            <Form onSubmit={this.handleSubmit}>
+              <Form.Field>
+                <label>Date</label>
+                <DateInput
+                  name="date"
+                  closable
+                  placeholder="Date"
+                  value={this.state.date}
+                  iconPosition="left"
+                  onChange={this.handleChange}
+                  />
+              </Form.Field>
+              <Form.Field >
+                <label>Hours Slept</label>
+                <Form.Input
+                  name="hours_slept"
+                  min="0"
+                  type="number"
+                  placeholder="Hours Slept"
+                  value={this.state.hours_slept}
+                  onChange={this.handleChange}
+                  />
+              </Form.Field>
+              <Form.Field>
+                <label>Sleep Quality</label>
+                <Form.Input
+                  name="quality"
+                  placeholder="Sleep Quality"
+                  value={this.state.quality}
+                  onChange={this.handleChange}
+                  />
+              </Form.Field>
+              <Form.Field >
+                <label>State of Mind</label>
+                <Form.Input
+                  name="state_of_mind"
+                  placeholder="What's been on your mind? What's been inspiring you?"
+                  value={this.state.state_of_mind}
+                  onChange={this.handleChange}
+                  />
+              </Form.Field>
+              <Divider />
+              <Form.TextArea
+                placeholder="Dream..."
+                name="dream"
+                value={this.state.dream}
+                onChange={this.handleChange}
+                rows={8}
+                />
+              <Dropdown
+                compact
+                options={this.generateDropdownOptions(this.props.interpretations)}
+                placeholder='dream tags'
+                name="tags"
+                clearable
+                upward={false}
+                scrolling
+                closeOnBlur
+                search
+                selection
+                fluid
+                multiple
+                closeOnChange
+                value={this.state.tags}
+                loading={this.props.loading}
+                onAddItem={this.handleAddition}
+                onChange={this.handleChange}
+                />
+              <Divider />
+              <Button type='submit'>Submit</Button>
+            </Form>
+          </Container>
+          :
+          <Redirect to='/login'/>
+        }
+      </React.Fragment>
     )
   }
 
