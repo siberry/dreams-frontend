@@ -28,7 +28,7 @@ class DreamFeed extends React.Component {
   }
 
   renderDreamFeed() {
-    return this.state.dreams.map(dream => <Feed.Event key={dream.id} image={dream.image_url ? dream.image_url : ""} date={dream.date} summary={dream.user.username} extraText={dream.dream} />)
+    return this.state.dreams.map(dream => <Feed.Event key={dream.id} image={dream.image_url ? dream.image_url : ""} date={dream.date} summary={dream.user.username} extraText={dream.dream} extraImages={dream.dream_tags.length > 0 ? dream.dream_tags.map(dream_tag => dream_tag.img_url) : null}/>)
   }
 
   render() {
