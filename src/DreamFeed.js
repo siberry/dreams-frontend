@@ -17,7 +17,6 @@ class DreamFeed extends React.Component {
 
   componentDidMount(){
     this.fetchFeed()
-
   }
 
   fetchFeed = () => {
@@ -39,11 +38,10 @@ class DreamFeed extends React.Component {
   }
 
   renderDreamFeed() {
-    return this.state.dreams.map(dream => <FeedEvent key={dream.id} {...dream} />)
+    return this.state.dreams.map(dream => <FeedEvent key={dream.id} currentUser={this.props.currentUser} {...dream} />)
   }
 
   render() {
-    console.log("rendering dreamFeed")
     return (
       <Feed>
         {this.state.dreams ? this.renderDreamFeed() : null}

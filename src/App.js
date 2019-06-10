@@ -55,7 +55,7 @@ class App extends React.Component {
     return (
       <React.Fragment>
       <Route path="/"
-        render={(routerProps) => <Nav {...routerProps} currentUser={this.state.currentUser} logOut={this.logOut}/>}
+        render={(routerProps) => <Nav {...routerProps} currentUser={this.state.currentUser} updateUser={this.updateUser} />}
         />
 
           <Switch>
@@ -92,15 +92,6 @@ class App extends React.Component {
 		localStorage.setItem("token", data.token)
 		this.setState({
 			currentUser: data.user
-		})
-	}
-
-  logOut = () => {
-		localStorage.removeItem('token')
-		this.setState({
-			currentUser: null
-		}, () => {
-			this.props.history.push("/dream_dictionary")
 		})
 	}
 

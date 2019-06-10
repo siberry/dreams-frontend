@@ -67,7 +67,8 @@ class DreamDictionary extends React.Component {
     this.setState({
       selectedLetter
     }, () => {
-      this.props.history.push(`/dream_dictionary/${selectedLetter}`)
+      this.props.history.push(`/dream_dictionary/${selectedLetter}`);
+      window.scrollTo(0, 0)
     })
   }
 

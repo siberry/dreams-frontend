@@ -10,6 +10,7 @@ class DreamForm extends React.Component {
     state_of_mind: "",
     dream: "",
     tags: [],
+    id: undefined
   }
 
   componentDidMount() {
@@ -26,6 +27,22 @@ class DreamForm extends React.Component {
     this.setState({
       date: defaultDate
     })
+    if (this.props.match.params.id) {
+      fetch(`http://localhost:3000/dreams/${this.props.match.params.id}`)
+      .then(res => res.json())
+      .then(dream =>
+        {console.log(dream);
+        this.setState({
+          id: dream.id,
+          date: dream.date,
+          dream: dream.dream,
+          tags: dream.dream_tags,
+          hours_slept: dream.hours_slept,
+          quality: dream.quality,
+          state_of_mind: dream.state_of_mind
+        })}
+      )
+    }
   }
 
   generateDropdownOptions(tags) {
@@ -54,7 +71,7 @@ class DreamForm extends React.Component {
               min="0"
               type="number"
               placeholder="Hours Slept"
-              value={this.state.hoursSlept}
+              value={this.state.hours_slept}
               onChange={this.handleChange}
               />
           </Form.Field>
@@ -63,7 +80,7 @@ class DreamForm extends React.Component {
             <Form.Input
               name="quality"
               placeholder="Sleep Quality"
-              value={this.state.sleepQuality}
+              value={this.state.quality}
               onChange={this.handleChange}
               />
           </Form.Field>
@@ -72,7 +89,7 @@ class DreamForm extends React.Component {
             <Form.Input
               name="state_of_mind"
               placeholder="What's been on your mind? What's been inspiring you?"
-              value={this.state.stateOfMind}
+              value={this.state.state_of_mind}
               onChange={this.handleChange}
             />
           </Form.Field>
@@ -100,7 +117,6 @@ class DreamForm extends React.Component {
               closeOnChange
               value={this.state.tags}
               loading={this.props.loading}
-              allowAdditions
               onAddItem={this.handleAddition}
               onChange={this.handleChange}
             />
@@ -114,8 +130,10 @@ class DreamForm extends React.Component {
   handleSubmit = () => {
     const {date, hours_slept, quality, state_of_mind, dream, tags} = this.state
     const user_id = this.props.currentUser.id
-    fetch('http://localhost:3000/dreams', {
-      method: "POST",
+    const method = this.state.id ? "PATCH" : "POST"
+    const url = this.state.id ? `http://localhost:3000/dreams/${this.state.id}` : "http://localhost:3000/dreams/"
+    fetch(url, {
+      method: method,
       headers: {
         'Content-Type': "application/json",
         'Accept': "application/json"

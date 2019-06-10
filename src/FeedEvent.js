@@ -1,5 +1,5 @@
 import React from 'react'
-import { Feed } from 'semantic-ui-react'
+import { Feed, Image, Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
 export default function FeedEvent(props) {
@@ -15,8 +15,20 @@ export default function FeedEvent(props) {
           {props.dream}
         </Feed.Extra>
         {props.dream_tags.length > 0 ?
-        <Feed.Extra images={props.dream_tags.map(dream_tag => dream_tag.img_url)}/>
+        <Feed.Extra images>
+          {props.dream_tags.map(dream_tag => {return(
+            <Image
+              key={dream_tag.id}
+              src={dream_tag.img_url}
+              alt={dream_tag.tag_name}
+              as={Link}
+              to={`/dream_dictionary/${dream_tag.tag_name.slice(0,1)}/${dream_tag.id}`}
+               />
+           )}
+          )}
+        </Feed.Extra>
         : null }
+        {props.currentUser && props.currentUser.id === props.user.id ? <Button size="mini">Edit Dream</Button> : null}
       </Feed.Content>
     </Feed.Event>
   )
