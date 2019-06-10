@@ -8,7 +8,7 @@ import Profile from './Profile'
 import DreamForm from './DreamForm'
 import DreamFeed from './DreamFeed'
 import { Route, Switch, Redirect, } from 'react-router-dom';
-import { Container } from 'semantic-ui-react'
+// import { Container } from 'semantic-ui-react'
 
 class App extends React.Component {
   state = {
@@ -72,10 +72,11 @@ class App extends React.Component {
               render={(routerProps) => <SignUpForm setCurrentUser={this.setCurrentUser} {...routerProps}/>}/>
             <Route path="/login"
               render={(routerProps) => <LoginForm setCurrentUser={this.setCurrentUser} {...routerProps} />} />
-            <Route path="/" component={DreamFeed} />
+            <Route path="/"
+              render={(routerProps) => <DreamFeed loading={this.state.loading} feedToDisplay="global" {...routerProps}/>} />
             <Route render={() => <Redirect to='/'/>}/>
           </Switch>
-      
+
       </React.Fragment>
     );
   }

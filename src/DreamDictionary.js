@@ -1,8 +1,8 @@
 import React from 'react'
-import DreamInterpretation from './DreamInterpretation'
+// import DreamInterpretation from './DreamInterpretation'
 import DreamDefinition from './DreamDefinition'
-import ComplexButton from './ComplexButton'
-import { Card, Menu, Divider, Container, Loader, Dimmer, Grid } from 'semantic-ui-react'
+import DictionaryCard from './DictionaryCard'
+import { Menu, Divider, Container, Loader, Dimmer } from 'semantic-ui-react'
 
 
 class DreamDictionary extends React.Component {
@@ -54,7 +54,7 @@ class DreamDictionary extends React.Component {
     return arr.map(interpretation => {
       const displayName = interpretation.tag_name.length < 25 ?
         interpretation.tag_name : interpretation.tag_name.split(" ").slice(0,3).join(" ")
-      return <ComplexButton
+      return <DictionaryCard
         key={interpretation.id}
         displayName={displayName}
         setClickedTerm={this.setClickedTerm}

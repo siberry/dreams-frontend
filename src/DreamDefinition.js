@@ -1,9 +1,9 @@
 import React from 'react';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles'; //, useTheme
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import IconButton from '@material-ui/core/IconButton';
+// import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import ReadMore from './ReadMore'
 import Button from '@material-ui/core/Button';
@@ -63,7 +63,7 @@ const handleClick = (action, id) => {
 
 function DreamDefinition(props) {
   const classes = useStyles();
-  const theme = useTheme();
+  // const theme = useTheme();
   const {img_url, displayName, interpretation, id} = props.clickedTerm
   return (
     <Card className={classes.card}>

@@ -77,7 +77,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function ComplexButton(props) {
+export default function DictionaryCard(props) {
   const classes = useStyles();
   let {displayName, interpretation, id, img_url} = props
   img_url = img_url && img_url.length > 0 ? img_url : "https://d32dm0rphc51dk.cloudfront.net/y-A5_Pp8nxYiCor6mwkUKg/square.jpg"
