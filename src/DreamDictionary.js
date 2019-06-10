@@ -3,6 +3,7 @@ import React from 'react'
 import DreamDefinition from './DreamDefinition'
 import DictionaryCard from './DictionaryCard'
 import { Menu, Divider, Container, Loader, Dimmer } from 'semantic-ui-react'
+import { connect } from 'react-redux'
 
 
 class DreamDictionary extends React.Component {
@@ -79,4 +80,10 @@ class DreamDictionary extends React.Component {
   }
 }
 
-export default DreamDictionary;
+function mapStateToProps(state) {
+  return {
+    interpretations: state.interpretations,
+  }
+}
+
+export default connect(mapStateToProps)(DreamDictionary);

@@ -7,23 +7,20 @@ import Nav from './Nav'
 import DreamForm from './DreamForm'
 import DreamFeed from './DreamFeed'
 import { Route, Switch, Redirect, } from 'react-router-dom';
-// import { Container } from 'semantic-ui-react'
+import { connect } from 'react-redux'
 
 class App extends React.Component {
   state = {
 		currentUser: null,
     interpretations: [],
-    loading: true
+    loading: false
 	}
 
   componentDidMount(){
     fetch("http://localhost:3000/dream_tags")
     .then(res => res.json())
     .then(interpretations => {
-      this.setState({
-        interpretations,
-        loading: false
-      })
+      this.props.addInterpretations(interpretations)
     });
 
 		const token = localStorage.getItem("token")
@@ -63,18 +60,18 @@ class App extends React.Component {
               render={(routerProps) => <DreamFeed loading={this.state.loading} feedToDisplay="global" {...routerProps}/>} />
             <Route
               path="/post_dream"
-              render={(routerProps) => <DreamForm {...routerProps} loading={this.state.loading} interpretations={this.state.interpretations} currentUser={currentUser}/>}
+              render={(routerProps) => <DreamForm {...routerProps} loading={this.state.loading} currentUser={currentUser}/>}
               />
             <Route
               path="/dream/:id"
-              render={(routerProps) => <DreamForm {...routerProps} loading={this.state.loading} interpretations={this.state.interpretations} currentUser={currentUser}/>}
+              render={(routerProps) => <DreamForm {...routerProps} loading={this.state.loading} currentUser={currentUser}/>}
               />
             <Route path="/user/:id"
               render={(routerProps) => <DreamFeed {...routerProps} feedToDisplay={"user"}/>} />
             <Route path="/dream_dictionary/:letter"
-              render={(routerProps) => <DreamDictionary loading={this.state.loading} interpretations={this.state.interpretations} {...routerProps}/>}/>
+              render={(routerProps) => <DreamDictionary loading={this.state.loading} {...routerProps}/>}/>
             <Route path="/dream_dictionary"
-              render={(routerProps) => <DreamDictionary loading={this.state.loading} interpretations={this.state.interpretations} {...routerProps}/>}/>
+              render={(routerProps) => <DreamDictionary loading={this.state.loading} {...routerProps}/>}/>
             <Route path="/sign_up"
               render={(routerProps) => <SignUpForm setCurrentUser={this.setCurrentUser} {...routerProps}/>}/>
             <Route path="/login"
@@ -98,8 +95,14 @@ class App extends React.Component {
 			currentUser: data.user
 		})
 	}
-
-
 }
 
-export default App;
+function mapDispatchToProps(dispatch) {
+  return {
+    addInterpretations: (interpretations) => {
+      return dispatch({type: "ADD_INTERPRETATIONS", payload: interpretations})
+    }
+  }
+}
+
+export default connect(null, mapDispatchToProps)(App);

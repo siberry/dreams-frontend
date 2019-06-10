@@ -2,6 +2,7 @@ import React from 'react'
 import { DateInput } from 'semantic-ui-calendar-react';
 import { Form, Container, Divider, Button, Dropdown } from 'semantic-ui-react'
 import { Redirect, } from 'react-router-dom';
+import { connect } from 'react-redux'
 
 class DreamForm extends React.Component {
   state = {
@@ -161,4 +162,10 @@ class DreamForm extends React.Component {
   }
 }
 
-export default DreamForm
+function mapStateToProps(state) {
+  return {
+    interpretations: state.interpretations,
+  }
+}
+
+export default connect(mapStateToProps)(DreamForm)

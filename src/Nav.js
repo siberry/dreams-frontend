@@ -44,6 +44,7 @@ export default class Nav extends Component {
             <React.Fragment>
               <Menu.Item
                 name='profile'
+                content={this.props.currentUser.username}
                 active={activeItem === "profile"}
                 as={ NavLink }
                 to={`/user/${this.props.currentUser.id}`}
