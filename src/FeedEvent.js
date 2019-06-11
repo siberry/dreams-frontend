@@ -28,7 +28,7 @@ export default function FeedEvent(props) {
           )}
         </Feed.Extra>
         : null }
-        {props.currentUser && props.currentUser.id === props.user.id ? <Button size="mini">Edit Dream</Button> : null}
+        {props.currentUser && props.currentUser.id === props.user.id ? <Button onClick={console.log} size="mini">Edit Dream</Button> : null}
       </Feed.Content>
     </Feed.Event>
   )

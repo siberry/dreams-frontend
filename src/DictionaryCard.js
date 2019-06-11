@@ -77,11 +77,10 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function DictionaryCard(props) {
+function DictionaryCard(props) {
   const classes = useStyles();
-  let {displayName, interpretation, id, img_url} = props
+  let {displayName, interpretation, id, img_url, tag_name} = props
   img_url = img_url && img_url.length > 0 ? img_url : "https://d32dm0rphc51dk.cloudfront.net/y-A5_Pp8nxYiCor6mwkUKg/square.jpg"
-
   return (
     <div className={classes.root}>
     <Grid item xs={12}>
@@ -93,7 +92,11 @@ export default function DictionaryCard(props) {
           style={{
             width: '100%',
           }}
-          onClick={() => props.setClickedTerm({displayName, interpretation, id, img_url})}
+          onClick={() => {
+            props.history.push(`/dream_dictionary/${tag_name.slice(0,1)}/${props.id}`);
+            window.scroll(0,0)
+            }
+          }
         >
           <span
             className={classes.imageSrc}
@@ -118,3 +121,5 @@ export default function DictionaryCard(props) {
     </div>
   );
 }
+
+export default DictionaryCard

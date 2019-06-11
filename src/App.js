@@ -13,14 +13,17 @@ class App extends React.Component {
   state = {
 		currentUser: null,
     interpretations: [],
-    loading: false
+    loading: true
 	}
 
   componentDidMount(){
     fetch("http://localhost:3000/dream_tags")
     .then(res => res.json())
     .then(interpretations => {
-      this.props.addInterpretations(interpretations)
+      this.props.addInterpretations(interpretations);
+      this.setState({
+        loading: false
+      })
     });
 
 		const token = localStorage.getItem("token")
@@ -68,6 +71,8 @@ class App extends React.Component {
               />
             <Route path="/user/:id"
               render={(routerProps) => <DreamFeed {...routerProps} feedToDisplay={"user"}/>} />
+            <Route path="/dream_dictionary/:letter/:selectedTermId"
+              render={(routerProps) => <DreamDictionary loading={this.state.loading} {...routerProps}/>}/>
             <Route path="/dream_dictionary/:letter"
               render={(routerProps) => <DreamDictionary loading={this.state.loading} {...routerProps}/>}/>
             <Route path="/dream_dictionary"

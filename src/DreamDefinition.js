@@ -7,6 +7,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import ReadMore from './ReadMore'
 import Button from '@material-ui/core/Button';
+import { connect } from 'react-redux'
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -63,19 +64,18 @@ const handleClick = (action, id) => {
 
 function DreamDefinition(props) {
   const classes = useStyles();
-  // const theme = useTheme();
-  const {img_url, displayName, interpretation, id} = props.clickedTerm
+  const {img_url, displayName, interpretation, id, tag_name} = props.selectedTerm
   return (
     <Card className={classes.card}>
       <CardMedia
         className={classes.cover}
         image={img_url}
-        title="Live from space album cover"
+        title={tag_name}
       />
       <div className={classes.details}>
         <CardContent className={classes.content}>
           <Typography component="h5" variant="h5">
-            {displayName}
+            {tag_name}
           </Typography>
           <Typography variant="subtitle1" color="textSecondary">
             {interpretation.length <= 270 ?
@@ -96,4 +96,10 @@ function DreamDefinition(props) {
   );
 }
 
-export default DreamDefinition;
+function mapStateToProps(state) {
+  return {
+    selectedTerm: state.selectedTerm,
+  }
+}
+
+export default connect(mapStateToProps)(DreamDefinition);

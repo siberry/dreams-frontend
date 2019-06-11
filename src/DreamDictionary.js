@@ -9,12 +9,18 @@ import { connect } from 'react-redux'
 class DreamDictionary extends React.Component {
   state = {
     selectedLetter: this.props.match.params.letter,
-    clickedTerm: undefined
+    // selectedTermId: this.props.match.params.selectedTermId
   }
 
   render() {
-    const {selectedLetter, clickedTerm} = this.state
+    const {selectedLetter, selectedTermId} = this.state
     const {interpretations} = this.props
+    const selectedTerm = interpretations.find(interpretation => {
+      return parseInt(this.props.match.params.selectedTermId) === interpretation.id
+    })
+    if (selectedTerm) {
+      this.props.setSelectedTerm(selectedTerm)
+    }
     const displayInterpretations = selectedLetter ? interpretations.filter(interpretation => interpretation.tag_name.startsWith(selectedLetter.toUpperCase())) : interpretations
     return (
       <Dimmer.Dimmable>
@@ -22,10 +28,10 @@ class DreamDictionary extends React.Component {
         <Menu pagination>
           {("ABCDEFGHIJKLMNOPQRSTUVWXYZ").split("").map(letter => <Menu.Item key={letter} name={letter} active={selectedLetter === letter} onClick={(e,data) => this.handleLetterClick(data.name)} />)}
         </Menu>
-        {clickedTerm ?
+        {selectedTerm ?
           <React.Fragment>
             <Divider />
-            <DreamDefinition clickedTerm={this.state.clickedTerm}/>
+            <DreamDefinition selectedTerm={selectedTerm}/>
           </React.Fragment>
           :
           null
@@ -60,6 +66,7 @@ class DreamDictionary extends React.Component {
         displayName={displayName}
         setClickedTerm={this.setClickedTerm}
         {...interpretation}
+        history={this.props.history}
         />
     })
   }
@@ -83,7 +90,16 @@ class DreamDictionary extends React.Component {
 function mapStateToProps(state) {
   return {
     interpretations: state.interpretations,
+    selectedTerm: state.selectedTerm
   }
 }
 
-export default connect(mapStateToProps)(DreamDictionary);
+function mapDispatchToProps(dispatch) {
+  return {
+    setSelectedTerm: (term) => {
+      return dispatch({type: "SET_SELECTED_TERM", payload: term})
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DreamDictionary);
