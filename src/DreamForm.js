@@ -1,6 +1,6 @@
 import React from 'react'
 import { DateInput } from 'semantic-ui-calendar-react';
-import { Form, Container, Divider, Button, Dropdown } from 'semantic-ui-react'
+import { Form, Container, Divider, Button, Dropdown, Loader, Dimmer } from 'semantic-ui-react'
 import { Redirect, } from 'react-router-dom';
 import { connect } from 'react-redux'
 
@@ -12,7 +12,8 @@ class DreamForm extends React.Component {
     state_of_mind: "",
     dream: "",
     tags: [],
-    id: undefined
+    id: undefined,
+    activeUser: undefined
   }
 
   componentDidMount() {
@@ -49,9 +50,10 @@ class DreamForm extends React.Component {
   }
 
   render() {
+    console.log("rendering Dream Form")
     return (
       <React.Fragment>
-        {this.props.currentUser ?
+        {!this.props.loading && this.props.currentUser ?
           <Container text>
             <Form onSubmit={this.handleSubmit}>
               <Form.Field>
@@ -126,7 +128,16 @@ class DreamForm extends React.Component {
             </Form>
           </Container>
           :
-          <Redirect to='/login'/>
+          <Container>
+            <Dimmer active inverted>
+              <Loader inline="centered" size='large' inverted>
+                Loading
+              </Loader>
+            </Dimmer>
+          </Container>
+        }
+        {!this.props.loading && this.props.currentUser ?
+          null : <Redirect to='/login'/>
         }
       </React.Fragment>
     )

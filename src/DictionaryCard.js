@@ -79,14 +79,14 @@ const useStyles = makeStyles(theme => ({
 
 function DictionaryCard(props) {
   const classes = useStyles();
-  let {displayName, interpretation, id, img_url, tag_name} = props
+  let {displayName, id, img_url, tag_name} = props
   img_url = img_url && img_url.length > 0 ? img_url : "https://d32dm0rphc51dk.cloudfront.net/y-A5_Pp8nxYiCor6mwkUKg/square.jpg"
   return (
     <div className={classes.root}>
     <Grid item xs={12}>
         <ButtonBase
           focusRipple
-          key={props.tagname}
+          key={id}
           className={classes.image}
           focusVisibleClassName={classes.focusVisible}
           style={{
@@ -112,7 +112,7 @@ function DictionaryCard(props) {
               color="inherit"
               className={classes.imageTitle}
             >
-              {props.tag_name}
+              {displayName}
               <span className={classes.imageMarked} />
             </Typography>
           </span>

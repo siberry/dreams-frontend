@@ -9,11 +9,10 @@ import { connect } from 'react-redux'
 class DreamDictionary extends React.Component {
   state = {
     selectedLetter: this.props.match.params.letter,
-    // selectedTermId: this.props.match.params.selectedTermId
   }
 
   render() {
-    const {selectedLetter, selectedTermId} = this.state
+    const {selectedLetter} = this.state
     const {interpretations} = this.props
     const selectedTerm = interpretations.find(interpretation => {
       return parseInt(this.props.match.params.selectedTermId) === interpretation.id

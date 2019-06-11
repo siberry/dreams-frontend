@@ -16,15 +16,27 @@ class App extends React.Component {
     loading: true
 	}
 
+  getActiveItem = () => {
+    switch (this.props.location.pathname.includes) {
+      case (`/user`):
+        return "profile"
+      default:
+        return "dream_feed"
+    }
+  }
+
   componentDidMount(){
     fetch("http://localhost:3000/dream_tags")
     .then(res => res.json())
     .then(interpretations => {
       this.props.addInterpretations(interpretations);
+      this.props.setActiveItem(this.getActiveItem())
       this.setState({
         loading: false
       })
     });
+
+
 
 		const token = localStorage.getItem("token")
  		if (token){
@@ -106,6 +118,9 @@ function mapDispatchToProps(dispatch) {
   return {
     addInterpretations: (interpretations) => {
       return dispatch({type: "ADD_INTERPRETATIONS", payload: interpretations})
+    },
+    setActiveItem: (activeItem) => {
+      return dispatch({type: "SET_ACTIVE_ITEM", payload: activeItem})
     }
   }
 }

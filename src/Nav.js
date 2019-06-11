@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import { Menu } from 'semantic-ui-react'
 import { Link, NavLink } from 'react-router-dom'
+import { connect } from 'react-redux'
 
-export default class Nav extends Component {
-  state = {
-    activeItem: undefined,
-  }
+class Nav extends Component {
 
   componentDidMount() {
     const activeItem = this.props.location.pathname.substr(1).length > 1 ? this.props.location.pathname.substr(1) : "dream_feed"
@@ -15,7 +13,7 @@ export default class Nav extends Component {
   }
 
   render() {
-    const { activeItem } = this.state
+    const { activeItem, setActiveItem } = this.props
     return (
       <Menu pointing secondary>
         <Menu.Item
@@ -23,21 +21,21 @@ export default class Nav extends Component {
           as={ Link }
           to="/"
           active={activeItem === 'dream_feed'}
-          onClick={(e, data) => this.setState({activeItem: data.name})}
+          onClick={(e, data) => setActiveItem(data.name)}
           />
         <Menu.Item
           name='post_dream'
           as={ NavLink }
           to="/post_dream"
           active={activeItem === 'post_dream'}
-          onClick={(e, data) => this.setState({activeItem: data.name})}
+          onClick={(e, data) => setActiveItem(data.name)}
         />
         <Menu.Item
           name='dream_dictionary'
           active={activeItem === 'dream_dictionary'}
           as={ NavLink }
           to="/dream_dictionary/a"
-          onClick={(e, data) => this.setState({activeItem: data.name})}
+          onClick={(e, data) => setActiveItem(data.name)}
         />
         <Menu.Menu position='right'>
           {this.props.currentUser ?
@@ -48,7 +46,7 @@ export default class Nav extends Component {
                 active={activeItem === "profile"}
                 as={ NavLink }
                 to={`/user/${this.props.currentUser.id}`}
-                onClick={(e, data) => this.setState({activeItem: data.name})}
+                onClick={(e, data) => setActiveItem(data.name)}
               />
               <Menu.Item
                 name='logout'
@@ -63,14 +61,14 @@ export default class Nav extends Component {
                 active={activeItem === 'login'}
                 as={ NavLink }
                 to="/login"
-                onClick={(e, data) => this.setState({activeItem: data.name})}
+                onClick={(e, data) => setActiveItem(data.name)}
                 />
               <Menu.Item
                 name='sign_up'
                 active={activeItem === 'sign_up'}
                 as={ NavLink }
                 to="/sign_up"
-                onClick={(e, data) => this.setState({activeItem: data.name})}
+                onClick={(e, data) => setActiveItem(data.name)}
                 />
             </React.Fragment>
           }
@@ -83,8 +81,22 @@ export default class Nav extends Component {
 		localStorage.removeItem('token')
 		this.props.updateUser(null)
     this.props.history.push("/")
-    this.setState({
-      activeItem: "dream_feed"
-    })
+    this.props.setActiveItem("dream_feed")
 	}
 }
+
+function mapStateToProps(state) {
+  return {
+    activeItem: state.activeItem
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    setActiveItem: (activeItem) => {
+      return dispatch({type: "SET_ACTIVE_ITEM", payload: activeItem})
+    }
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Nav)

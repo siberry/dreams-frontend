@@ -12,8 +12,12 @@ function reducer(state = defaultState, action) {
     case "ADD_INTERPRETATIONS":
       return {...state, interpretations: action.payload}
     case "SET_SELECTED_TERM":
-      console.log(action.payload)
       return {...state, selectedTerm: action.payload}
+    case "SET_ACTIVE_ITEM":
+      console.log(action.payload)
+      return {...state, activeItem: action.payload}
+    case "SET_CURRENT_USER":
+      return {...state, currentUser: action.payload}
     default:
       return state
   }
