@@ -16,6 +16,10 @@ class DreamForm extends React.Component {
     activeUser: undefined
   }
 
+  generateDropdownOptions(tags) {
+    return tags.map(tag => {return { key: tag.tag_name, text: tag.tag_name, value: tag.id }})
+  }
+
   componentDidMount() {
     const d = new Date();
     let yesterday = d.getDate() - 1
@@ -37,20 +41,16 @@ class DreamForm extends React.Component {
           id: dream.id,
           date: dream.date,
           dream: dream.dream,
-          tags: dream.dream_tags,
+          tags: dream.dream_tags.map(tag=>tag.id),
           hours_slept: dream.hours_slept,
           quality: dream.quality,
           state_of_mind: dream.state_of_mind
-        }))
+        },() => console.log(this.state)))
     }
   }
 
-  generateDropdownOptions(tags) {
-    return tags.map(tag => {return { key: tag.tag_name, text: tag.tag_name, value: tag.id }})
-  }
-
   render() {
-    console.log("rendering Dream Form")
+    console.log(this.state.tags)
     return (
       <React.Fragment>
         {!this.props.loading && this.props.currentUser ?
@@ -136,9 +136,6 @@ class DreamForm extends React.Component {
             </Dimmer>
           </Container>
         }
-        {!this.props.loading && this.props.currentUser ?
-          null : <Redirect to='/login'/>
-        }
       </React.Fragment>
     )
   }
@@ -176,6 +173,7 @@ class DreamForm extends React.Component {
 function mapStateToProps(state) {
   return {
     interpretations: state.interpretations,
+    currentUser: state.currentUser
   }
 }
 

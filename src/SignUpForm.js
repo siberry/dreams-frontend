@@ -1,5 +1,6 @@
 import React from 'react'
 import {Form, Button, Container} from 'semantic-ui-react'
+import { connect } from 'react-redux'
 
 class SignUpForm extends React.Component {
   state = {
@@ -70,4 +71,12 @@ class SignUpForm extends React.Component {
 	}
 }
 
-export default SignUpForm
+function mapDispatchToProps(dispatch) {
+  return {
+		setCurrentUser: (currentUser) => {
+			return dispatch({type: "SET_CURRENT_USER", payload: currentUser})
+		}
+	}
+}
+
+export default connect(null, mapDispatchToProps)(SignUpForm)

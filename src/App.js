@@ -11,8 +11,6 @@ import { connect } from 'react-redux'
 
 class App extends React.Component {
   state = {
-		currentUser: null,
-    interpretations: [],
     loading: true
 	}
 
@@ -36,8 +34,6 @@ class App extends React.Component {
       })
     });
 
-
-
 		const token = localStorage.getItem("token")
  		if (token){
 			fetch('http://localhost:3000/auto_login', {
@@ -50,20 +46,13 @@ class App extends React.Component {
 				if (response.errors){
 					console.log(response)
 				} else {
-					this.setState({
-						currentUser: response
-					}, () => {
-            if (this.props.history) {
-              this.props.history.push(`/user/${response.id}`)
-            }
-					})
+					this.props.setCurrentUser({user: response, token})
 				}
 			})
 		}
 	}
 
   render() {
-    const {currentUser} = this.state
     return (
       <React.Fragment>
       <Route path="/"
@@ -75,11 +64,11 @@ class App extends React.Component {
               render={(routerProps) => <DreamFeed loading={this.state.loading} feedToDisplay="global" {...routerProps}/>} />
             <Route
               path="/post_dream"
-              render={(routerProps) => <DreamForm {...routerProps} loading={this.state.loading} currentUser={currentUser}/>}
+              render={(routerProps) => <DreamForm {...routerProps} loading={this.state.loading}/>}
               />
             <Route
               path="/dream/:id"
-              render={(routerProps) => <DreamForm {...routerProps} loading={this.state.loading} currentUser={currentUser}/>}
+              render={(routerProps) => <DreamForm {...routerProps} loading={this.state.loading} />}
               />
             <Route path="/user/:id"
               render={(routerProps) => <DreamFeed {...routerProps} feedToDisplay={"user"}/>} />
@@ -90,9 +79,9 @@ class App extends React.Component {
             <Route path="/dream_dictionary"
               render={(routerProps) => <DreamDictionary loading={this.state.loading} {...routerProps}/>}/>
             <Route path="/sign_up"
-              render={(routerProps) => <SignUpForm setCurrentUser={this.setCurrentUser} {...routerProps}/>}/>
+              render={(routerProps) => <SignUpForm {...routerProps}/>}/>
             <Route path="/login"
-              render={(routerProps) => <LoginForm setCurrentUser={this.setCurrentUser} {...routerProps} />} />
+              render={(routerProps) => <LoginForm {...routerProps} />} />
             <Route render={() => <Redirect to='/'/>}/>
           </Switch>
 
@@ -121,6 +110,9 @@ function mapDispatchToProps(dispatch) {
     },
     setActiveItem: (activeItem) => {
       return dispatch({type: "SET_ACTIVE_ITEM", payload: activeItem})
+    },
+    setCurrentUser: (currentUser) => {
+      return dispatch({type: "SET_CURRENT_USER", payload: currentUser})
     }
   }
 }

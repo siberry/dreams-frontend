@@ -38,7 +38,7 @@ class DreamFeed extends React.Component {
   }
 
   renderDreamFeed() {
-    return this.state.dreams.map(dream => <FeedEvent key={dream.id} currentUser={this.props.currentUser} {...dream} />)
+    return this.state.dreams.map(dream => <FeedEvent key={dream.id} history={this.props.history} {...dream} />)
   }
 
   render() {

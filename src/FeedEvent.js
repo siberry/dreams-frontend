@@ -1,8 +1,9 @@
 import React from 'react'
 import { Feed, Image, Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
-export default function FeedEvent(props) {
+function FeedEvent(props) {
   return(
     <Feed.Event>
       <Feed.Label image={props.avatar ? props.avatar : ""}/>
@@ -28,8 +29,16 @@ export default function FeedEvent(props) {
           )}
         </Feed.Extra>
         : null }
-        {props.currentUser && props.currentUser.id === props.user.id ? <Button onClick={console.log} size="mini">Edit Dream</Button> : null}
+        {props.currentUser && props.currentUser.id === props.user.id ? <Button onClick={() => props.history.push(`/dream/${props.id}`)} size="mini">Edit Dream</Button> : null}
       </Feed.Content>
     </Feed.Event>
   )
 }
+
+function mapStateToProps(state) {
+  return {
+    currentUser: state.currentUser
+  }
+}
+
+export default connect(mapStateToProps)(FeedEvent)
