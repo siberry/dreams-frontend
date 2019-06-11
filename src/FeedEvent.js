@@ -14,6 +14,12 @@ function FeedEvent(props) {
         </Feed.Summary>
         <Feed.Extra text>
           {props.dream}
+          <br/>
+          Mind: {props.state_of_mind}
+          <br/>
+          Slept for {props.hours_slept} hours
+          <br/>
+          Quality of sleep: {props.quality}
         </Feed.Extra>
         {props.dream_tags.length > 0 ?
         <Feed.Extra images>

@@ -153,7 +153,6 @@ class DreamForm extends React.Component {
       },
       body: JSON.stringify({dream: {date, hours_slept, quality, state_of_mind, dream, user_id}, tags})
     })
-    .then(res => res.json())
     .then(() => this.props.history.push(`/user/${user_id}`))
   }
 

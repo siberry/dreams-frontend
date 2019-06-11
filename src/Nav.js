@@ -79,7 +79,7 @@ class Nav extends Component {
 
   logOut = () => {
 		localStorage.removeItem('token')
-		this.props.updateUser(null)
+		this.props.setCurrentUser({user: null, token: null})
     this.props.history.push("/")
     this.props.setActiveItem("dream_feed")
 	}
@@ -96,6 +96,9 @@ function mapDispatchToProps(dispatch) {
   return {
     setActiveItem: (activeItem) => {
       return dispatch({type: "SET_ACTIVE_ITEM", payload: activeItem})
+    },
+    setCurrentUser: (currentUser) => {
+      return dispatch({type: "SET_CURRENT_USER", payload: currentUser})
     }
   }
 }

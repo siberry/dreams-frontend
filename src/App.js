@@ -94,13 +94,6 @@ class App extends React.Component {
 			currentUser: user
 		})
 	}
-
-  setCurrentUser = (data) => {
-		localStorage.setItem("token", data.token)
-		this.setState({
-			currentUser: data.user
-		})
-	}
 }
 
 function mapDispatchToProps(dispatch) {
