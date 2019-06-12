@@ -47,3 +47,12 @@
   align-self: unset;
   margin: -5px -20px -2px -4px;
 }
+
+.ui.avatar.image {
+  width: 2.5em;
+  height: 2.5em
+}
+
+.ui.card>.content, .ui.cards>.card>.content.head {
+  flex-grow: 0;
+}

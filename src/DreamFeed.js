@@ -1,5 +1,5 @@
 import React from 'react'
-import { Feed, Container, Loader, Dimmer } from 'semantic-ui-react'
+import { Feed, Container, Loader, Dimmer, Card } from 'semantic-ui-react'
 import FeedEvent from './FeedEvent'
 import { connect } from 'react-redux'
 
@@ -58,9 +58,11 @@ class DreamFeed extends React.Component {
               </Loader>
             </Dimmer>
           </Container> :
-          <Feed>
-            {this.state.dreams ? this.renderDreamFeed() : null}
-          </Feed>
+          <Container>
+            <Card.Group itemsPerRow="2">
+              {this.state.dreams ? this.renderDreamFeed() : null}
+            </Card.Group>
+          </Container>
         }
     </Dimmer.Dimmable>
     )

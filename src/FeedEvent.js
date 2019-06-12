@@ -1,5 +1,5 @@
 import React from 'react'
-import { Feed, Image, Button } from 'semantic-ui-react'
+import { Feed, Image, Button, Card, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
@@ -12,15 +12,20 @@ class FeedEvent extends React.Component {
     const { username } = user
 
     return(
-      <Feed.Event>
-        <Feed.Label image={avatar ? avatar : ""}/>
-        <Feed.Content>
-          <Feed.Summary>
-            <Feed.User content={username} as={ Link } to={`/user/${user.id}`}/>
-            <Feed.Date>{date}</Feed.Date>
-          </Feed.Summary>
+      <Card fluid >
+        <Card.Content className="head">
+          <Image avatar floated="left" src={avatar ? avatar : `https://api.adorable.io/avatars/184/${username}`}/>
+          <Icon.Group>
+            <Icon name='cloud' />
+            <Icon corner name='add' />
+          </Icon.Group>
+          <Feed.User content={username} as={ Link } to={`/user/${user.id}`}/>
+          <Feed.Date content={date}/>
+        </Card.Content>
+        <Card.Content>
+          {dream}
           {dream_tags.length > 0 ?
-            <Feed.Extra images>
+            <Image.Group size="tiny">
               {dream_tags.map(dream_tag => {return(
                 <Image
                   key={dream_tag.id}
@@ -31,15 +36,14 @@ class FeedEvent extends React.Component {
                   />
               )}
             )}
-          </Feed.Extra>
+          </Image.Group>
           : null }
-          <Feed.Extra>
-            {dream}
-          </Feed.Extra>
+        </Card.Content>
+        <Feed.Content>
           {currentUser && currentUser.id === user.id ? <Button onClick={() => this.props.history.push(`/dream/${id}`)} size="mini">Edit Dream</Button> : null}
-          <Button size="mini" onClick={() => this.setState({
-              readMore: true
-            })}>Read More</Button>
+          <Button size="mini" onClick={() => this.setState(prevState => {
+              return {readMore: !prevState.readMore}
+            })}>{this.state.readMore ? "Read Less" : "Read More"}</Button>
           {this.state.readMore ?
             <Feed.Extra text>
               <br/>
@@ -52,7 +56,7 @@ class FeedEvent extends React.Component {
             null
           }
         </Feed.Content>
-      </Feed.Event>
+      </Card>
     )
   }
 }
