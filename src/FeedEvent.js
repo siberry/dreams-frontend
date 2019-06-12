@@ -3,42 +3,58 @@ import { Feed, Image, Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-function FeedEvent(props) {
-  return(
-    <Feed.Event>
-      <Feed.Label image={props.avatar ? props.avatar : ""}/>
-      <Feed.Content>
-        <Feed.Summary>
-          <Feed.User content={props.user.username} as={ Link } to={`/user/${props.user.id}`}/>
-          <Feed.Date>{props.date}</Feed.Date>
-        </Feed.Summary>
-        <Feed.Extra text>
-          {props.dream}
-          <br/>
-          Mind: {props.state_of_mind}
-          <br/>
-          Slept for {props.hours_slept} hours
-          <br/>
-          Quality of sleep: {props.quality}
-        </Feed.Extra>
-        {props.dream_tags.length > 0 ?
-        <Feed.Extra images>
-          {props.dream_tags.map(dream_tag => {return(
-            <Image
-              key={dream_tag.id}
-              src={dream_tag.img_url}
-              alt={dream_tag.tag_name}
-              as={Link}
-              to={`/dream_dictionary/${dream_tag.tag_name.slice(0,1)}/${dream_tag.id}`}
-               />
-           )}
-          )}
-        </Feed.Extra>
-        : null }
-        {props.currentUser && props.currentUser.id === props.user.id ? <Button onClick={() => props.history.push(`/dream/${props.id}`)} size="mini">Edit Dream</Button> : null}
-      </Feed.Content>
-    </Feed.Event>
-  )
+class FeedEvent extends React.Component {
+  state={
+    readMore: false
+  }
+  render() {
+    const { avatar, user, date, dream_tags, dream, currentUser, id, state_of_mind, quality, hours_slept } = this.props
+    const { username } = user
+
+    return(
+      <Feed.Event>
+        <Feed.Label image={avatar ? avatar : ""}/>
+        <Feed.Content>
+          <Feed.Summary>
+            <Feed.User content={user.username} as={ Link } to={`/user/${user.id}`}/>
+            <Feed.Date>{date}</Feed.Date>
+          </Feed.Summary>
+          {dream_tags.length > 0 ?
+            <Feed.Extra images>
+              {dream_tags.map(dream_tag => {return(
+                <Image
+                  key={dream_tag.id}
+                  src={dream_tag.img_url}
+                  alt={dream_tag.tag_name}
+                  as={Link}
+                  to={`/dream_dictionary/${dream_tag.tag_name.slice(0,1)}/${dream_tag.id}`}
+                  />
+              )}
+            )}
+          </Feed.Extra>
+          : null }
+          <Feed.Extra>
+            {dream}
+          </Feed.Extra>
+          {currentUser && currentUser.id === user.id ? <Button onClick={() => this.props.history.push(`/dream/${id}`)} size="mini">Edit Dream</Button> : null}
+          <Button size="mini" onClick={() => this.setState({
+              readMore: true
+            })}>Read More</Button>
+          {this.state.readMore ?
+            <Feed.Extra text>
+              <br/>
+              <strong>Mind:</strong> {state_of_mind}
+              <br/>
+              Slept for {hours_slept} hours
+              <br/>
+              <strong>Quality of sleep:</strong> {quality}
+            </Feed.Extra> :
+            null
+          }
+        </Feed.Content>
+      </Feed.Event>
+    )
+  }
 }
 
 function mapStateToProps(state) {
