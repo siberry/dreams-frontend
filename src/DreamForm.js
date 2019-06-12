@@ -13,7 +13,6 @@ class DreamForm extends React.Component {
     dream: "",
     tags: [],
     id: undefined,
-    activeUser: undefined
   }
 
   generateDropdownOptions(tags) {
@@ -31,6 +30,7 @@ class DreamForm extends React.Component {
       month = "0"+month
     }
     let defaultDate = yesterday + "-" + month + "-" + d.getFullYear()
+    this.props.loadingFalse()
     this.setState({
       date: defaultDate
     })
@@ -45,12 +45,11 @@ class DreamForm extends React.Component {
           hours_slept: dream.hours_slept,
           quality: dream.quality,
           state_of_mind: dream.state_of_mind
-        },() => console.log(this.state)))
+      }))
     }
   }
 
   render() {
-    console.log(this.state.tags)
     return (
       <React.Fragment>
         {!this.props.loading && this.props.currentUser ?
@@ -136,6 +135,9 @@ class DreamForm extends React.Component {
             </Dimmer>
           </Container>
         }
+        {!this.props.loading && !this.props.currentUser ?
+          <Redirect to='/login'/> : null
+        }
       </React.Fragment>
     )
   }
@@ -172,8 +174,17 @@ class DreamForm extends React.Component {
 function mapStateToProps(state) {
   return {
     interpretations: state.interpretations,
-    currentUser: state.currentUser
+    currentUser: state.currentUser,
+    loading: state.loading
   }
 }
 
-export default connect(mapStateToProps)(DreamForm)
+function mapDispatchToProps(dispatch) {
+  return {
+    loadingFalse: () => {
+      return dispatch({type: "CHANGE_LOAD_STATUS"})
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DreamForm)

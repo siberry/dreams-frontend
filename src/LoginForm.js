@@ -1,6 +1,7 @@
 import React from 'react'
 import { Form, Button, Container } from 'semantic-ui-react'
 import { connect } from 'react-redux'
+import { Redirect, } from 'react-router-dom';
 
 class LoginForm extends React.Component {
 	state = {
@@ -9,20 +10,27 @@ class LoginForm extends React.Component {
 	}
 
 	render(){
+		console.log(this.props)
 		return (
-			<Container text>
-				<Form onSubmit={this.handleSubmit}>
-					<Form.Field>
-						<label>Username</label>
-						<input onChange={this.handleChange} name="username" value={this.state.username} placeholder='Username' />
-					</Form.Field>
-					<Form.Field>
-						<label>Password</label>
-						<input onChange={this.handleChange} type="password" name="password" value={this.state.password} placeholder='Password' />
-					</Form.Field>
-					<Button type='submit'>Submit</Button>
-				</Form>
-			</Container>
+			<React.Fragment>
+				{!this.props.loading && !this.props.currentUser ?
+					<Container text>
+						<Form onSubmit={this.handleSubmit}>
+							<Form.Field>
+								<label>Username</label>
+								<input onChange={this.handleChange} name="username" value={this.state.username} placeholder='Username' />
+							</Form.Field>
+							<Form.Field>
+								<label>Password</label>
+								<input onChange={this.handleChange} type="password" name="password" value={this.state.password} placeholder='Password' />
+							</Form.Field>
+							<Button type='submit'>Submit</Button>
+						</Form>
+					</Container>
+				:
+					<Redirect to='/post_dream'/>
+				}
+			</React.Fragment>
 		)
 	}
 
@@ -54,6 +62,13 @@ class LoginForm extends React.Component {
 	}
 }
 
+function mapStateToProps(state) {
+  return {
+    currentUser: state.currentUser,
+		loading: state.loading
+  }
+}
+
 function mapDispatchToProps(dispatch) {
   return {
 		setCurrentUser: (currentUser) => {
@@ -62,4 +77,4 @@ function mapDispatchToProps(dispatch) {
 	}
 }
 
-export default connect(null, mapDispatchToProps)(LoginForm)
+export default connect(mapStateToProps, mapDispatchToProps)(LoginForm)

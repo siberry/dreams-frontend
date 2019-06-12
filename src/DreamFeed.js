@@ -1,6 +1,7 @@
 import React from 'react'
-import { Feed } from 'semantic-ui-react'
+import { Feed, Container, Loader, Dimmer } from 'semantic-ui-react'
 import FeedEvent from './FeedEvent'
+import { connect } from 'react-redux'
 
 
 class DreamFeed extends React.Component {
@@ -23,9 +24,12 @@ class DreamFeed extends React.Component {
     const backendUrl = this.getBackendUrl()
     fetch(backendUrl)
     .then(res => res.json())
-    .then(dreams => this.setState({
-      dreams
-    }))
+    .then(dreams => {
+      this.props.loadingFalse();
+      this.setState({
+        dreams
+      })
+    })
   }
 
   getBackendUrl() {
@@ -43,11 +47,38 @@ class DreamFeed extends React.Component {
 
   render() {
     return (
-      <Feed>
-        {this.state.dreams ? this.renderDreamFeed() : null}
-      </Feed>
+      <Dimmer.Dimmable>
+        {this.props.loading ?
+          <Container>
+            <Dimmer active inverted>
+              <br/>
+              <br/>
+              <Loader inline="centered" size='large' inverted>
+                Loading
+              </Loader>
+            </Dimmer>
+          </Container> :
+          <Feed>
+            {this.state.dreams ? this.renderDreamFeed() : null}
+          </Feed>
+        }
+    </Dimmer.Dimmable>
     )
   }
 }
 
-export default DreamFeed
+function mapStateToProps(state) {
+  return {
+    loading: state.loading
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    loadingFalse: () => {
+      return dispatch({type: "CHANGE_LOAD_STATUS"})
+    }
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(DreamFeed)

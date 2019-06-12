@@ -14,11 +14,12 @@ function reducer(state = defaultState, action) {
     case "SET_SELECTED_TERM":
       return {...state, selectedTerm: action.payload}
     case "SET_ACTIVE_ITEM":
-      console.log(action.payload)
       return {...state, activeItem: action.payload}
     case "SET_CURRENT_USER":
       localStorage.setItem("token", action.payload.token)
       return {...state, currentUser: action.payload.user}
+    case "CHANGE_LOAD_STATUS":
+      return {...state, loading: false}
     default:
       return state
   }

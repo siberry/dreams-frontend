@@ -23,35 +23,35 @@ class DreamDictionary extends React.Component {
     const displayInterpretations = selectedLetter ? interpretations.filter(interpretation => interpretation.tag_name.startsWith(selectedLetter.toUpperCase())) : interpretations
     return (
       <Dimmer.Dimmable>
-      <Container>
-        <Menu pagination>
-          {("ABCDEFGHIJKLMNOPQRSTUVWXYZ").split("").map(letter => <Menu.Item key={letter} name={letter} active={selectedLetter === letter} onClick={(e,data) => this.handleLetterClick(data.name)} />)}
-        </Menu>
-        {selectedTerm ?
-          <React.Fragment>
-            <Divider />
-            <DreamDefinition selectedTerm={selectedTerm}/>
-          </React.Fragment>
-          :
-          null
-        }
-        <Divider />
-
-      {this.props.loading ?
         <Container>
-          <Dimmer active inverted>
-            <Loader inline="centered" size='large' inverted>
-              Loading
-            </Loader>
-          </Dimmer>
-        </Container>
-          :
-          <div className="dictionary">
-            {this.renderDreamInterpretations(displayInterpretations)}
-          </ div>
-        }
+          <Menu pagination>
+            {("ABCDEFGHIJKLMNOPQRSTUVWXYZ").split("").map(letter => <Menu.Item key={letter} name={letter} active={selectedLetter === letter} onClick={(e,data) => this.handleLetterClick(data.name)} />)}
+          </Menu>
+          {selectedTerm ?
+            <React.Fragment>
+              <Divider />
+              <DreamDefinition selectedTerm={selectedTerm}/>
+            </React.Fragment>
+            :
+            null
+          }
+          <Divider />
 
-      </Container>
+        {this.props.loading ?
+          <Container>
+            <Dimmer active inverted>
+              <Loader inline="centered" size='large' inverted>
+                Loading
+              </Loader>
+            </Dimmer>
+          </Container>
+            :
+            <div className="dictionary">
+              {this.renderDreamInterpretations(displayInterpretations)}
+            </ div>
+          }
+
+        </Container>
       </Dimmer.Dimmable>
     )
   }
@@ -89,7 +89,8 @@ class DreamDictionary extends React.Component {
 function mapStateToProps(state) {
   return {
     interpretations: state.interpretations,
-    selectedTerm: state.selectedTerm
+    selectedTerm: state.selectedTerm,
+    loading: state.loading
   }
 }
 
