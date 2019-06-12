@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Menu } from 'semantic-ui-react'
+import { Menu, Image } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
@@ -9,10 +9,13 @@ class Nav extends Component {
     const { activeItem } = this.props
     return (
       <Menu pointing secondary>
+        <Menu.Item className="icon">
+          <img src="/kaleidiscope_icon.png" />
+        </Menu.Item>
         <Menu.Item
           name='dream_feed'
           as={ Link }
-          to="/"
+          to="/dream_feed"
           active={activeItem === 'dream_feed'}
           />
         <Menu.Item

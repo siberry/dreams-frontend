@@ -73,7 +73,7 @@ class App extends React.Component {
         />
 
           <Switch>
-            <Route exact path="/"
+            <Route path="/dream_feed"
               render={(routerProps) => <DreamFeed feedToDisplay="global" {...routerProps}/>} />
             <Route
               path="/post_dream"
@@ -95,7 +95,7 @@ class App extends React.Component {
               render={(routerProps) => <SignUpForm {...routerProps}/>}/>
             <Route path="/login"
               render={(routerProps) => <LoginForm {...routerProps} />} />
-            <Route render={() => <Redirect to='/'/>}/>
+            <Route render={() => <Redirect to='/dream_dictionary/A'/>}/>
           </Switch>
 
       </React.Fragment>

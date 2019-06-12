@@ -24,7 +24,7 @@ class DreamDictionary extends React.Component {
     return (
       <Dimmer.Dimmable>
         <Container>
-          <Menu pagination>
+          <Menu pagination >
             {("ABCDEFGHIJKLMNOPQRSTUVWXYZ").split("").map(letter => <Menu.Item key={letter} name={letter} active={selectedLetter === letter} onClick={(e,data) => this.handleLetterClick(data.name)} />)}
           </Menu>
           {selectedTerm ?

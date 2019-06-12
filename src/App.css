@@ -39,4 +39,11 @@
 
 .ui.pagination.menu .item {
   min-width: 0em;
+  align-self: unset;
+}
+
+
+.ui.secondary.pointing.menu .item.icon {
+  align-self: unset;
+  margin: -5px -20px -2px -4px;
 }
