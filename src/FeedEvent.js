@@ -16,7 +16,7 @@ class FeedEvent extends React.Component {
         <Feed.Label image={avatar ? avatar : ""}/>
         <Feed.Content>
           <Feed.Summary>
-            <Feed.User content={user.username} as={ Link } to={`/user/${user.id}`}/>
+            <Feed.User content={username} as={ Link } to={`/user/${user.id}`}/>
             <Feed.Date>{date}</Feed.Date>
           </Feed.Summary>
           {dream_tags.length > 0 ?
@@ -45,7 +45,7 @@ class FeedEvent extends React.Component {
               <br/>
               <strong>Mind:</strong> {state_of_mind}
               <br/>
-              Slept for {hours_slept} hours
+              <strong>Slept for {hours_slept} hours</strong>
               <br/>
               <strong>Quality of sleep:</strong> {quality}
             </Feed.Extra> :
