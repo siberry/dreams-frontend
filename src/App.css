@@ -56,3 +56,20 @@
 .ui.card>.content, .ui.cards>.card>.content.head {
   flex-grow: 0;
 }
+
+i.icons {
+  left: 4px;
+}
+
+.ui.checkbox {
+  left: 9px;
+}
+
+.ui.segment.slider {
+  padding: 1em 1.5em 1em 1em;
+}
+
+.toggle-global:hover {
+  cursor: pointer;
+  color: rgba(0,0,0,.8);
+}

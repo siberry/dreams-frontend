@@ -10,7 +10,7 @@ class Nav extends Component {
     return (
       <Menu pointing secondary>
         <Menu.Item className="icon">
-          <img src="/kaleidiscope_icon.png" />
+          <img src="/kaleidiscope_icon.png" alt="icon"/>
         </Menu.Item>
         <Menu.Item
           name='dream_feed'
