@@ -39,44 +39,51 @@ class FeedEvent extends React.Component {
     return this.props.currentUser.favorites.map(favorite => favorite.id)
   }
 
+  formatDate = () => {
+    const dateArray = this.props.date.split("-")
+    const monthNumber = parseInt(dateArray[1])
+    const month = ["Months", "Jan", "Feb", "March", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"][monthNumber]
+    return (month + " " + dateArray[0] + ", " + dateArray[2])
+  }
+
   render() {
-    const { avatar, user, date, dream_tags, dream, currentUser, id, state_of_mind, quality, hours_slept } = this.props
+    const { avatar, user, specific_dream_tags, dream, currentUser, id, state_of_mind, quality, hours_slept } = this.props
     const { username } = user
+    const date = this.formatDate()
+    const dream_tags = specific_dream_tags.map(specificDreamTag => this.props.interpretations.find(dreamTag=> dreamTag.id === specificDreamTag.dream_tag_id))
     return(
       <Card fluid >
         <Card.Content className="head">
           <Image avatar floated="left" src={avatar || `https://api.adorable.io/avatars/184/${username}`}/>
           <Feed.User content={username} as={ Link } to={`/user/${user.id}`}/>
           {currentUser && currentUser.id !== user.id ?
-            <Popup position='top center' content='Follow user' trigger={
+            <Popup
+              position='top center'
+              content={
+                this.getFavoritesIds().includes(user.id) ?
+                "Unfollow" : 'Follow user'
+              }
+              trigger={
                 <Icon.Group
                   onClick={this.handleFollow}>
                   <Icon
                     link
                     name='cloud'
-                    size={
-                    this.getFavoritesIds().includes(user.id) ?
-                    "small"
-                    : null
+                    size={ this.getFavoritesIds().includes(user.id) ?
+                      "small": null
                     }
-                    color={
-                    this.getFavoritesIds().includes(user.id) ?
-                    "red"
-                    : null
+                    color={ this.getFavoritesIds().includes(user.id) ?
+                    "red" : null
                     }
                   />
                   <Icon
                     link
                     corner
-                    name={
-                      currentUser.favorites.map(favorite => favorite.id).includes(user.id) ?
-                      "remove"
-                      : "add"
+                    name={ currentUser.favorites.map(favorite => favorite.id).includes(user.id) ?
+                      "remove" : "add"
                     }
-                    color={
-                    currentUser.favorites.map(favorite => favorite.id).includes(user.id) ?
-                    "red"
-                    : null
+                    color={ currentUser.favorites.map(favorite => favorite.id).includes(user.id) ?
+                    "red" : null
                     }
                   />
                 </Icon.Group>
@@ -134,7 +141,8 @@ class FeedEvent extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    currentUser: state.currentUser
+    currentUser: state.currentUser,
+    interpretations: state.interpretations
   }
 }
 

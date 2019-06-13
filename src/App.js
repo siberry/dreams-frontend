@@ -16,11 +16,8 @@ class App extends React.Component {
     if (currentUser && pathname === `/user/${currentUser.id}`) {
       return "profile"
     }
-    else if (pathname.includes("/post_dream")) {
+    else if (pathname.includes("/post_dream") || pathname.includes("/dream/")) {
       return "post_dream"
-    }
-    else if (pathname.includes("/dream_dictionary")) {
-      return "dream_dictionary"
     }
     else if (pathname === "/dream_feed") {
       return "dream_feed"
@@ -30,13 +27,17 @@ class App extends React.Component {
     }
     else if (pathname === "/sign_up") {
       return "sign_up"
-    } else {
+    }
+    else {
       return "dream_dictionary"
     }
   }
 
   componentDidMount(){
     this.props.setActiveItem(this.getActiveItem())
+
+    const token = localStorage.getItem("token")
+
     fetch("http://localhost:3000/dream_tags")
     .then(res => res.json())
     .then(interpretations => {
@@ -44,7 +45,13 @@ class App extends React.Component {
     })
     .then(()=> this.props.changeLoadingStatus(false))
 
-		const token = localStorage.getItem("token")
+    fetch("http://localhost:3000/dreams")
+    .then(res => res.json())
+    .then(dreams => {
+      this.props.addDreams(dreams);
+      // this.props.changeLoadingStatus(false)
+    })
+
  		if (token){
 			fetch('http://localhost:3000/auto_login', {
 				headers: {
@@ -54,7 +61,6 @@ class App extends React.Component {
 			.then(res => res.json())
 			.then(response => {
 				if (response.errors){
-					console.log(response)
 				} else {
 					this.props.setCurrentUser(response);
 				}
@@ -132,6 +138,9 @@ function mapDispatchToProps(dispatch) {
     },
     changeLoadingStatus: (status) => {
       return dispatch({type: "CHANGE_LOAD_STATUS", payload: status})
+    },
+    addDreams: (dreams) => {
+      return dispatch({type: "GET_DREAMS", payload: dreams})
     }
   }
 }

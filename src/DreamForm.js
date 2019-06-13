@@ -37,8 +37,6 @@ class DreamForm extends React.Component {
         tags: [parseInt(this.props.match.params.selectedTagId)]
       })
     }
-
-    this.props.changeLoadingStatus(false)
     this.setState({
       date: defaultDate
     })
@@ -55,14 +53,15 @@ class DreamForm extends React.Component {
           hours_slept: dream.hours_slept,
           quality: dream.quality,
           state_of_mind: dream.state_of_mind,
-          privatePost: dream.private
-      })
+          privatePost: dream.private || false,
+      }, () => this.props.changeLoadingStatus(false))
     })
-    }
+  } else {
+    this.props.changeLoadingStatus(false)
+  }
   }
 
   render() {
-    console.log(this.state.privatePost)
     return (
       <React.Fragment>
         {!this.props.loading && this.props.currentUser ?
@@ -183,10 +182,8 @@ class DreamForm extends React.Component {
       },
       body: JSON.stringify({dream: {date, hours_slept, quality, state_of_mind, dream, user_id}, privatePost, tags})
     })
-    .then(() => {
-      this.props.history.push(`/user/${user_id}`)
-      this.props.changeLoadingStatus(true)
-      })
+    .then(() => this.props.changeLoadingStatus(true))
+    .then(() => this.props.history.push(`/user/${user_id}`))
   }
 
   handleChange = (event, {name, value}) => {

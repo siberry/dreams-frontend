@@ -56,7 +56,7 @@ class LoginForm extends React.Component {
 				console.log(data)
 				this.props.setCurrentUser(data.user)
 				localStorage.setItem("token", data.token)
-				this.props.history.push(`/users/${data.user.id}`)
+				this.props.history.push(`/user/${data.user.id}`)
 			}
 
 		})

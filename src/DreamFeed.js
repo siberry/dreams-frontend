@@ -6,65 +6,36 @@ import { connect } from 'react-redux'
 
 class DreamFeed extends React.Component {
   state = {
-    // feedToDisplay: "global", // global, (related to selectedUser:) following, user's (might be a prop)
-    dreams: undefined,
     following: false
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props.match.params.id !== prevProps.match.params.id){
-      this.fetchFeed()
+  renderDreamFeed(arr) {
+    const publicAndCurrentUserDreams = arr.filter(dream => {
+      return !dream.private || (this.props.currentUser && (dream.user.id === this.props.currentUser.id))
+    })
+    if (this.props.feedToDisplay === "user") {
+      const userDreams = publicAndCurrentUserDreams.filter(dream => dream.user.id === parseInt(this.props.match.params.id))
+      return userDreams.map(dream => <FeedEvent key={dream.id} history={this.props.history} {...dream} />)
+    } else {
+      return publicAndCurrentUserDreams.map(dream => <FeedEvent key={dream.id} history={this.props.history} {...dream} />)
     }
   }
 
-  componentDidMount(){
-    this.fetchFeed()
-  }
-
-  fetchFeed = () => {
-    const backendUrl = this.getBackendUrl()
-    fetch(backendUrl)
-    .then(res => res.json())
-    .then(dreams => {
-      this.props.changeLoadingStatus(false);
-      this.setState({
-        dreams,
-        following: false
-      })
-    })
-  }
-
-  getBackendUrl() {
-    switch (this.props.feedToDisplay) {
-      case "user":
-        return `http://localhost:3000/users/${this.props.match.params.id}/dreams`
-      default:
-        return "http://localhost:3000/dreams"
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.currentUser && this.props.currentUser.favorites.length === 0 && prevState.following ) {
+      this.setState({following: false})
     }
-  }
-
-  renderDreamFeed() {
-    const publicAndCurrentUserDreams = this.state.dreams.filter(dream => {
-      return !dream.private || this.props.currentUser && dream.user.id === this.props.currentUser.id
-    })
-    console.log("all dreams", this.state.dreams, "display dreams", publicAndCurrentUserDreams)
-    return publicAndCurrentUserDreams.map(dream => <FeedEvent key={dream.id} history={this.props.history} {...dream} />)
   }
 
   getFollowedFeeds() {
     const favoritesIds =  this.props.currentUser.favorites.map(favorite => favorite.id)
-    return this.state.dreams.filter(dream => favoritesIds.includes(dream.user.id) )
+    return this.props.dreams.filter(dream => favoritesIds.includes(dream.user.id) )
   }
 
   handleSlider = (checked) => {
-    if (checked) {
-      this.setState({
-        dreams: this.getFollowedFeeds(),
-        following: true
-      })
-    } else {
-      this.fetchFeed()
-    }
+    this.setState(prevState => {
+      return {following: !prevState.following}
+    })
   }
 
   render() {
@@ -76,7 +47,7 @@ class DreamFeed extends React.Component {
             <label
               className="toggle-global"
               style={this.state.following ? {color: "rgb(0,0,0,.4)"} : null }
-              onClick={() => this.handleSlider(!this.state.following)}
+              onClick={this.handleSlider}
               >
               Global Feed
             </label>
@@ -84,7 +55,7 @@ class DreamFeed extends React.Component {
               <Checkbox
                 disabled={this.props.currentUser.favorites.length === 0}
                 label="Followed Dreamers"
-                onChange={(e, { checked }) => this.handleSlider(checked)}
+                onChange={this.handleSlider}
                 slider
                 checked={this.state.following}
                 /> : null
@@ -103,7 +74,7 @@ class DreamFeed extends React.Component {
           :
 
           <Card.Group itemsPerRow="2">
-            {this.state.dreams ? this.renderDreamFeed() : null}
+            {this.state.following ? this.renderDreamFeed(this.getFollowedFeeds()) : this.renderDreamFeed(this.props.dreams)}
           </Card.Group>
 
         }
@@ -116,7 +87,8 @@ class DreamFeed extends React.Component {
 function mapStateToProps(state) {
   return {
     loading: state.loading,
-    currentUser: state.currentUser
+    currentUser: state.currentUser,
+    dreams: state.dreams
   }
 }
 

@@ -4,7 +4,8 @@ const defaultState = {
   loading: true,
   activeItem: "",
   selectedLetter: "A",
-  selectedTerm: undefined
+  selectedTerm: undefined,
+  dreams: []
 }
 
 function reducer(state = defaultState, action) {
@@ -19,6 +20,8 @@ function reducer(state = defaultState, action) {
       return {...state, currentUser: action.payload}
     case "CHANGE_LOAD_STATUS":
       return {...state, loading: action.payload}
+    case "GET_DREAMS":
+      return {...state, dreams: action.payload}
     default:
       return state
   }
