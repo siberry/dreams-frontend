@@ -78,3 +78,12 @@ i.icons {
   box-shadow: none;
   margin-right: 2em;
 }
+
+.ui.basic.button:hover, .ui.basic.button:focus {
+  box-shadow: none!important;
+  cursor: inherit;
+}
+
+.ui.pagination.menu {
+  margin-left: 0.75em!important;
+}

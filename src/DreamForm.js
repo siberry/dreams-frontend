@@ -1,6 +1,6 @@
 import React from 'react'
 import { DateInput } from 'semantic-ui-calendar-react';
-import { Form, Container, Divider, Button, Dropdown, Loader, Dimmer } from 'semantic-ui-react'
+import { Form, Container, Divider, Button, Dropdown, Loader, Dimmer, Checkbox, Segment } from 'semantic-ui-react'
 import { Redirect, } from 'react-router-dom';
 import { connect } from 'react-redux'
 
@@ -13,6 +13,7 @@ class DreamForm extends React.Component {
     dream: "",
     tags: [],
     id: undefined,
+    privatePost: true
   }
 
   generateDropdownOptions(tags) {
@@ -44,28 +45,24 @@ class DreamForm extends React.Component {
     if (this.props.match.params.id) {
       fetch(`http://localhost:3000/dreams/${this.props.match.params.id}`)
       .then(res => res.json())
-      .then(dream => this.setState({
+      .then(dream => {
+        console.log(dream)
+        this.setState({
           id: dream.id,
           date: dream.date,
           dream: dream.dream,
           tags: dream.dream_tags.map(tag=>tag.id),
           hours_slept: dream.hours_slept,
           quality: dream.quality,
-          state_of_mind: dream.state_of_mind
-      }))
+          state_of_mind: dream.state_of_mind,
+          privatePost: dream.private
+      })
+    })
     }
   }
-  //
-  // componentDidUpdate(prevProps) {
-  //   if (!this.state.tags.includes(prevProps.match.params.selectedTagId)) {
-  //     console.log(this.props.match.params.selectedTagId)
-  //     this.setState({
-  //       tags: [this.props.match.params.selectedTagId]
-  //     }, ()=>console.log(this.state.tags))
-  //   }
-  // }
 
   render() {
+    console.log(this.state.privatePost)
     return (
       <React.Fragment>
         {!this.props.loading && this.props.currentUser ?
@@ -138,6 +135,21 @@ class DreamForm extends React.Component {
                 onAddItem={this.handleAddition}
                 onChange={this.handleChange}
                 />
+              <Segment compact className="slider">
+                <label
+                  className="toggle-global"
+                  style={this.state.privatePost ? {color: "rgb(0,0,0,.4)"} : null }
+                  onClick={() => this.setState(prevState => {return {privatePost: !prevState.privatePost}})}
+                  >
+                  Public
+                </label>
+                <Checkbox
+                  label="Private"
+                  onChange={() => this.setState(prevState => {return {privatePost: !prevState.privatePost}})}
+                  slider
+                  checked={this.state.privatePost}
+                  />
+              </Segment>
               <Divider />
               <Button type='submit'>Submit</Button>
             </Form>
@@ -159,7 +171,7 @@ class DreamForm extends React.Component {
   }
 
   handleSubmit = () => {
-    const {date, hours_slept, quality, state_of_mind, dream, tags} = this.state
+    const {date, hours_slept, quality, state_of_mind, dream, tags, privatePost} = this.state
     const user_id = this.props.currentUser.id
     const method = this.state.id ? "PATCH" : "POST"
     const url = this.state.id ? `http://localhost:3000/dreams/${this.state.id}` : "http://localhost:3000/dreams/"
@@ -169,7 +181,7 @@ class DreamForm extends React.Component {
         'Content-Type': "application/json",
         'Accept': "application/json"
       },
-      body: JSON.stringify({dream: {date, hours_slept, quality, state_of_mind, dream, user_id}, tags})
+      body: JSON.stringify({dream: {date, hours_slept, quality, state_of_mind, dream, user_id}, privatePost, tags})
     })
     .then(() => this.props.history.push(`/user/${user_id}`))
   }

@@ -51,9 +51,14 @@ class Nav extends Component {
               />
             </React.Fragment>
             :
-            <Button loading basic size="small" className="navloader"/>
+            <Button
+              loading={this.props.loading}
+              basic
+              size="small"
+              className="navloader"
+              />
           }
-          {!this.props.loading && !this.props.currentUser ?
+          {!this.props.loading && !localStorage.getItem("token") ?
             <React.Fragment>
               <Menu.Item
                 name='login'
