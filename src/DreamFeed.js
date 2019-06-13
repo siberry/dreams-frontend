@@ -26,7 +26,7 @@ class DreamFeed extends React.Component {
     fetch(backendUrl)
     .then(res => res.json())
     .then(dreams => {
-      this.props.loadingFalse();
+      this.props.changeLoadingStatus(false);
       this.setState({
         dreams,
         following: false
@@ -44,7 +44,11 @@ class DreamFeed extends React.Component {
   }
 
   renderDreamFeed() {
-    return this.state.dreams.map(dream => <FeedEvent key={dream.id} history={this.props.history} {...dream} />)
+    const publicAndCurrentUserDreams = this.state.dreams.filter(dream => {
+      return !dream.private || this.props.currentUser && dream.user.id === this.props.currentUser.id
+    })
+    console.log("all dreams", this.state.dreams, "display dreams", publicAndCurrentUserDreams)
+    return publicAndCurrentUserDreams.map(dream => <FeedEvent key={dream.id} history={this.props.history} {...dream} />)
   }
 
   getFollowedFeeds() {
@@ -118,8 +122,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    loadingFalse: () => {
-      return dispatch({type: "CHANGE_LOAD_STATUS"})
+    changeLoadingStatus: (status) => {
+      return dispatch({type: "CHANGE_LOAD_STATUS", payload: status})
     }
   }
 }

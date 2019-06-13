@@ -42,7 +42,7 @@ class App extends React.Component {
     .then(interpretations => {
       this.props.addInterpretations(interpretations);
     })
-    .then(()=> this.props.loadingFalse())
+    .then(()=> this.props.changeLoadingStatus(false))
 
 		const token = localStorage.getItem("token")
  		if (token){
@@ -130,8 +130,8 @@ function mapDispatchToProps(dispatch) {
     setCurrentUser: (currentUser) => {
       return dispatch({type: "SET_CURRENT_USER", payload: currentUser})
     },
-    loadingFalse: () => {
-      return dispatch({type: "CHANGE_LOAD_STATUS"})
+    changeLoadingStatus: (status) => {
+      return dispatch({type: "CHANGE_LOAD_STATUS", payload: status})
     }
   }
 }

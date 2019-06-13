@@ -18,7 +18,7 @@ function reducer(state = defaultState, action) {
     case "SET_CURRENT_USER":
       return {...state, currentUser: action.payload}
     case "CHANGE_LOAD_STATUS":
-      return {...state, loading: false}
+      return {...state, loading: action.payload}
     default:
       return state
   }

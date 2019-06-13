@@ -38,7 +38,7 @@ class DreamForm extends React.Component {
       })
     }
 
-    this.props.loadingFalse()
+    this.props.changeLoadingStatus(false)
     this.setState({
       date: defaultDate
     })
@@ -183,7 +183,10 @@ class DreamForm extends React.Component {
       },
       body: JSON.stringify({dream: {date, hours_slept, quality, state_of_mind, dream, user_id}, privatePost, tags})
     })
-    .then(() => this.props.history.push(`/user/${user_id}`))
+    .then(() => {
+      this.props.history.push(`/user/${user_id}`)
+      this.props.changeLoadingStatus(true)
+      })
   }
 
   handleChange = (event, {name, value}) => {
@@ -209,8 +212,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    loadingFalse: () => {
-      return dispatch({type: "CHANGE_LOAD_STATUS"})
+    changeLoadingStatus: (status) => {
+      return dispatch({type: "CHANGE_LOAD_STATUS", payload: status})
     }
   }
 }
