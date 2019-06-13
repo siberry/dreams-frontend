@@ -30,6 +30,13 @@ class DreamForm extends React.Component {
       month = "0"+month
     }
     let defaultDate = yesterday + "-" + month + "-" + d.getFullYear()
+
+    if (this.props.match.params.selectedTagId) {
+      this.setState({
+        tags: [parseInt(this.props.match.params.selectedTagId)]
+      })
+    }
+
     this.props.loadingFalse()
     this.setState({
       date: defaultDate
@@ -48,6 +55,15 @@ class DreamForm extends React.Component {
       }))
     }
   }
+  //
+  // componentDidUpdate(prevProps) {
+  //   if (!this.state.tags.includes(prevProps.match.params.selectedTagId)) {
+  //     console.log(this.props.match.params.selectedTagId)
+  //     this.setState({
+  //       tags: [this.props.match.params.selectedTagId]
+  //     }, ()=>console.log(this.state.tags))
+  //   }
+  // }
 
   render() {
     return (

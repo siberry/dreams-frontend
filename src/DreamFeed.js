@@ -67,21 +67,27 @@ class DreamFeed extends React.Component {
     return (
       <Dimmer.Dimmable>
         <Container>
-        <Segment compact className="slider">
-          <label
-            className="toggle-global"
-            style={this.state.following ? {color: "rgb(0,0,0,.4)"} : null }
-            onClick={() => this.handleSlider(!this.state.following)}
-            >
-            Global Feed
-          </label>
-          <Checkbox
-            label="Followed Dreamers"
-            onChange={(e, { checked }) => this.handleSlider(checked)}
-            slider
-            checked={this.state.following ? true : false}
-          />
-        </Segment>
+        {this.props.feedToDisplay === "global" ?
+          <Segment compact className="slider">
+            <label
+              className="toggle-global"
+              style={this.state.following ? {color: "rgb(0,0,0,.4)"} : null }
+              onClick={() => this.handleSlider(!this.state.following)}
+              >
+              Global Feed
+            </label>
+            {this.props.currentUser ?
+              <Checkbox
+                disabled={!this.props.currentUser.favorites}
+                label="Followed Dreamers"
+                onChange={(e, { checked }) => this.handleSlider(checked)}
+                slider
+                checked={this.state.following}
+                /> : null
+            }
+          </Segment>
+          : null
+        }
         {this.props.loading ?
             <Dimmer active inverted>
               <br/>

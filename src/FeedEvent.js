@@ -9,35 +9,69 @@ class FeedEvent extends React.Component {
   }
 
   handleFollow = () => {
-    fetch("http://localhost:3000/follows", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accepts": "application/json",
-      },
-      body: JSON.stringify({
-        user_id: this.props.currentUser.id,
-        followed_id: this.props.user.id
+    if (!this.getFavoritesIds().includes(this.props.user.id)) {
+      fetch("http://localhost:3000/follows", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accepts": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: this.props.currentUser.id,
+          followed_id: this.props.user.id
+        })
       })
-    })
-    .then(res => res.json())
-    .then(console.log)
+      .then(res => res.json())
+      .then(res => {
+        this.props.setCurrentUser({user: res})
+      })
+    }
+  }
+
+  getFavoritesIds = () => {
+    return this.props.currentUser.favorites.map(favorite => favorite.id)
   }
 
   render() {
     const { avatar, user, date, dream_tags, dream, currentUser, id, state_of_mind, quality, hours_slept } = this.props
     const { username } = user
-
     return(
       <Card fluid >
         <Card.Content className="head">
-          <Image avatar floated="left" src={avatar ? avatar : `https://api.adorable.io/avatars/184/${username}`}/>
+          <Image avatar floated="left" src={avatar || `https://api.adorable.io/avatars/184/${username}`}/>
           <Feed.User content={username} as={ Link } to={`/user/${user.id}`}/>
           {currentUser && currentUser.id !== user.id ?
             <Popup position='top center' content='Follow user' trigger={
-                <Icon.Group onClick={this.handleFollow}>
-                  <Icon link name='cloud' />
-                  <Icon link corner name='add' />
+                <Icon.Group
+                  onClick={this.handleFollow}>
+                  <Icon
+                    link
+                    name='cloud'
+                    size={
+                    this.getFavoritesIds().includes(user.id) ?
+                    "small"
+                    : null
+                    }
+                    color={
+                    this.getFavoritesIds().includes(user.id) ?
+                    "red"
+                    : null
+                    }
+                  />
+                  <Icon
+                    link
+                    corner
+                    name={
+                      currentUser.favorites.map(favorite => favorite.id).includes(user.id) ?
+                      "remove"
+                      : "add"
+                    }
+                    color={
+                    currentUser.favorites.map(favorite => favorite.id).includes(user.id) ?
+                    "red"
+                    : null
+                    }
+                  />
                 </Icon.Group>
               } />
             : null
@@ -97,4 +131,12 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps)(FeedEvent)
+function mapDispatchToProps(dispatch) {
+  return {
+    setCurrentUser: (currentUser) => {
+      return dispatch({type: "SET_CURRENT_USER", payload: currentUser})
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FeedEvent)

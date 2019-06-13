@@ -9,9 +9,19 @@ class Nav extends Component {
     const { activeItem } = this.props
     return (
       <Menu pointing secondary>
-        <Menu.Item className="icon">
+        <Menu.Item
+          as={ Link }
+          active
+          to="/"
+          className="icon">
           <img src="/kaleidiscope_icon.png" alt="icon"/>
         </Menu.Item>
+        <Menu.Item
+          name='dream_dictionary'
+          active={activeItem === 'dream_dictionary'}
+          as={ Link }
+          to="/"
+          />
         <Menu.Item
           name='dream_feed'
           as={ Link }
@@ -23,12 +33,6 @@ class Nav extends Component {
           as={ Link }
           to="/post_dream"
           active={activeItem === 'post_dream'}
-        />
-        <Menu.Item
-          name='dream_dictionary'
-          active={activeItem === 'dream_dictionary'}
-          as={ Link }
-          to="/dream_dictionary/a"
         />
         <Menu.Menu position='right'>
           {this.props.currentUser ?

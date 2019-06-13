@@ -60,6 +60,7 @@ class SignUpForm extends React.Component {
 				if (response.errors){
 					alert(response.errors)
 				} else {
+          console.log(response)
 					this.props.setCurrentUser(response)
 					this.props.history.push(`/users/${response.id}`)
 				}

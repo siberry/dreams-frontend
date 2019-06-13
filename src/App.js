@@ -16,11 +16,14 @@ class App extends React.Component {
     if (currentUser && pathname === `/user/${currentUser.id}`) {
       return "profile"
     }
-    else if (pathname === "/post_dream") {
+    else if (pathname.includes("/post_dream")) {
       return "post_dream"
     }
     else if (pathname.includes("/dream_dictionary")) {
       return "dream_dictionary"
+    }
+    else if (pathname === "/dream_feed") {
+      return "dream_feed"
     }
     else if (pathname === "/login") {
       return "login"
@@ -28,7 +31,7 @@ class App extends React.Component {
     else if (pathname === "/sign_up") {
       return "sign_up"
     } else {
-      return "dream_feed"
+      return "dream_dictionary"
     }
   }
 
@@ -75,6 +78,10 @@ class App extends React.Component {
           <Switch>
             <Route path="/dream_feed"
               render={(routerProps) => <DreamFeed feedToDisplay="global" {...routerProps}/>} />
+              <Route
+                path="/post_dream/:selectedTagId"
+                render={(routerProps) => <DreamForm {...routerProps}/>}
+                />
             <Route
               path="/post_dream"
               render={(routerProps) => <DreamForm {...routerProps}/>}
@@ -90,12 +97,14 @@ class App extends React.Component {
             <Route path="/dream_dictionary/:letter"
               render={(routerProps) => <DreamDictionary {...routerProps}/>}/>
             <Route path="/dream_dictionary"
-              render={(routerProps) => <DreamDictionary {...routerProps}/>}/>
+              render={() => <Redirect to='/'/>}/>
             <Route path="/sign_up"
               render={(routerProps) => <SignUpForm {...routerProps}/>}/>
             <Route path="/login"
               render={(routerProps) => <LoginForm {...routerProps} />} />
-            <Route render={() => <Redirect to='/dream_dictionary/A'/>}/>
+            <Route path="/"
+              render={(routerProps) => <DreamDictionary {...routerProps}/>}/>
+            <Route render={() => <Redirect to='/'/>}/>
           </Switch>
 
       </React.Fragment>

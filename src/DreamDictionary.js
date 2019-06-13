@@ -8,7 +8,13 @@ import { connect } from 'react-redux'
 
 class DreamDictionary extends React.Component {
   state = {
-    selectedLetter: this.props.match.params.letter,
+    selectedLetter: "A",
+  }
+
+  componentDidMount() {
+    this.setState({
+      selectedLetter: this.props.match.params.letter || "A"
+    })
   }
 
   render() {
