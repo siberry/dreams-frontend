@@ -73,3 +73,8 @@ i.icons {
   cursor: pointer;
   color: rgba(0,0,0,.8);
 }
+
+.ui.basic.button.navloader {
+  box-shadow: none;
+  margin-right: 2em;
+}

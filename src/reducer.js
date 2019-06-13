@@ -16,9 +16,7 @@ function reducer(state = defaultState, action) {
     case "SET_ACTIVE_ITEM":
       return {...state, activeItem: action.payload}
     case "SET_CURRENT_USER":
-      const token = action.payload.token || state.token
-      localStorage.setItem("token", token)
-      return {...state, currentUser: action.payload.user}
+      return {...state, currentUser: action.payload}
     case "CHANGE_LOAD_STATUS":
       return {...state, loading: false}
     default:

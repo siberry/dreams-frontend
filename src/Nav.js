@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Menu } from 'semantic-ui-react'
+import { Menu, Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
@@ -51,6 +51,9 @@ class Nav extends Component {
               />
             </React.Fragment>
             :
+            <Button loading basic size="small" className="navloader"/>
+          }
+          {!this.props.loading && !this.props.currentUser ?
             <React.Fragment>
               <Menu.Item
                 name='login'
@@ -65,6 +68,8 @@ class Nav extends Component {
                 to="/sign_up"
                 />
             </React.Fragment>
+            :
+            null
           }
         </Menu.Menu>
       </Menu>
@@ -73,7 +78,7 @@ class Nav extends Component {
 
   logOut = () => {
 		localStorage.removeItem('token')
-		this.props.setCurrentUser({user: null, token: null})
+		this.props.setCurrentUser(null)
     this.props.history.push("/")
 	}
 }
@@ -81,7 +86,8 @@ class Nav extends Component {
 function mapStateToProps(state) {
   return {
     activeItem: state.activeItem,
-    currentUser: state.currentUser
+    currentUser: state.currentUser,
+    loading: state.loading
   }
 }
 

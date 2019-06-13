@@ -56,7 +56,7 @@ class App extends React.Component {
 				if (response.errors){
 					console.log(response)
 				} else {
-					this.props.setCurrentUser({user: response, token})
+					this.props.setCurrentUser(response);
 				}
 			})
 		}
@@ -110,12 +110,6 @@ class App extends React.Component {
       </React.Fragment>
     );
   }
-
-  updateUser = (user) => {
-		this.setState({
-			currentUser: user
-		})
-	}
 }
 
 function mapStateToProps(state) {

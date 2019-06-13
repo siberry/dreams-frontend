@@ -78,7 +78,7 @@ class DreamFeed extends React.Component {
             </label>
             {this.props.currentUser ?
               <Checkbox
-                disabled={!this.props.currentUser.favorites}
+                disabled={this.props.currentUser.favorites.length === 0}
                 label="Followed Dreamers"
                 onChange={(e, { checked }) => this.handleSlider(checked)}
                 slider

@@ -23,8 +23,15 @@ class FeedEvent extends React.Component {
       })
       .then(res => res.json())
       .then(res => {
-        this.props.setCurrentUser({user: res})
+        this.props.setCurrentUser(res)
       })
+    } else {
+      const follow_id = this.props.currentUser.follows.find(follow => follow.followed_id === this.props.user.id).id
+      fetch(`http://localhost:3000/follows/${follow_id}`, {
+        method: "DELETE"
+      })
+      .then(res => res.json())
+      .then(res => this.props.setCurrentUser(res))
     }
   }
 
