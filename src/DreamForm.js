@@ -23,13 +23,17 @@ class DreamForm extends React.Component {
     })
   }
 
-  componentDidUpdate(prevProps, prevState){
-    if(this.props.interpretations.length !== prevProps.interpretations.length){
-      this.generateDropdownOptions()
-    }
-  }
-
   componentDidMount() {
+    if(this.props.interpretations.length !== this.state.tagOptions.length){
+      this.generateDropdownOptions()
+    };
+
+    if (this.props.match.params.selectedTagId) {
+      this.setState({
+        tags: [parseInt(this.props.match.params.selectedTagId)]
+      })
+    };
+
     const d = new Date();
     let yesterday = d.getDate() - 1
     if (yesterday < 10) {
@@ -64,10 +68,9 @@ class DreamForm extends React.Component {
           state_of_mind: dream.state_of_mind,
           privatePost: dream.private || false,
       }, () => this.props.changeLoadingStatus(false))
-    })
-  } else {
-    this.props.changeLoadingStatus(false)
-  }
+    })} else {
+      this.props.changeLoadingStatus(false)
+    }
   }
 
   render() {

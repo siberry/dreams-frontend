@@ -36,7 +36,7 @@ class DreamDictionary extends React.Component {
           {selectedTerm ?
             <React.Fragment>
               <Divider />
-              <DreamDefinition selectedTerm={selectedTerm}/>
+              <DreamDefinition history={this.props.history} selectedTerm={selectedTerm}/>
             </React.Fragment>
             :
             null

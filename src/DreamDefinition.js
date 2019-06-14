@@ -88,7 +88,7 @@ function DreamDefinition(props) {
           </Typography>
           <Button
             variant="outlined" color="secondary"
-            onClick={() => this.props.history.push(`/post_dream/${id}`)}
+            onClick={() => props.history.push(`/post_dream/${id}`)}
             > Dreamt of this </Button>
 
         </CardContent>
