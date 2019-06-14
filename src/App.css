@@ -87,3 +87,7 @@ i.icons {
 .ui.pagination.menu {
   margin-left: 0.75em!important;
 }
+
+#read-more {
+  padding: 5px 31px;
+}

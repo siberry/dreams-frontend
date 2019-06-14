@@ -66,7 +66,7 @@ class ReadMore extends React.Component {
   render() {
     return (
       <div>
-        <Button variant="outlined" color="secondary" onClick={this.handleClickOpen}>
+        <Button variant="outlined" color="secondary" onClick={this.handleClickOpen} id="read-more">
           Read More
         </Button>
         <Dialog
