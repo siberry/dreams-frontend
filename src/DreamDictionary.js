@@ -18,6 +18,7 @@ class DreamDictionary extends React.Component {
   }
 
   render() {
+    window.scrollTo(0, 0)
     const {selectedLetter} = this.state
     const {interpretations} = this.props
     const selectedTerm = interpretations.find(interpretation => {
@@ -81,7 +82,6 @@ class DreamDictionary extends React.Component {
       selectedLetter
     }, () => {
       this.props.history.push(`/dream_dictionary/${selectedLetter}`);
-      window.scrollTo(0, 0)
     })
   }
 
