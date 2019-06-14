@@ -61,17 +61,12 @@ class Nav extends Component {
           {!this.props.loading && !localStorage.getItem("token") ?
             <React.Fragment>
               <Menu.Item
-                name='login'
+                name='login/sign_up'
                 active={activeItem === 'login'}
                 as={ Link }
                 to="/login"
-                />
-              <Menu.Item
-                name='sign_up'
-                active={activeItem === 'sign_up'}
-                as={ Link }
-                to="/sign_up"
-                />
+                >Login / Sign Up </Menu.Item>
+
             </React.Fragment>
             :
             null
