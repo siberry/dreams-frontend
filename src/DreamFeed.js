@@ -9,6 +9,10 @@ class DreamFeed extends React.Component {
     following: false
   }
 
+  // componentDidMount() {
+  //   this.props.changeLoadingStatus(false)
+  // }
+
   renderDreamFeed(arr) {
     const publicAndCurrentUserDreams = arr.filter(dream => {
       return !dream.private || (this.props.currentUser && (dream.user.id === this.props.currentUser.id))

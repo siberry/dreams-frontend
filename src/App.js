@@ -49,7 +49,6 @@ class App extends React.Component {
     .then(res => res.json())
     .then(dreams => {
       this.props.addDreams(dreams);
-      // this.props.changeLoadingStatus(false)
     })
 
  		if (token){

@@ -47,10 +47,10 @@ class FeedEvent extends React.Component {
   }
 
   render() {
-    const { avatar, user, specific_dream_tags, dream, currentUser, id, state_of_mind, quality, hours_slept } = this.props
+    const { avatar, user, dream_tags, dream, currentUser, id, state_of_mind, quality, hours_slept } = this.props
     const { username } = user
     const date = this.formatDate()
-    const dream_tags = specific_dream_tags.map(specificDreamTag => this.props.interpretations.find(dreamTag=> dreamTag.id === specificDreamTag.dream_tag_id))
+    
     return(
       <Card fluid >
         <Card.Content className="head">

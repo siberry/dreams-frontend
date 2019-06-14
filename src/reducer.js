@@ -22,6 +22,9 @@ function reducer(state = defaultState, action) {
       return {...state, loading: action.payload}
     case "GET_DREAMS":
       return {...state, dreams: action.payload}
+    case "SET_SELECTED_LETTER":
+    console.log(action.payload)
+      return {...state, selectedLetter: action.payload}
     default:
       return state
   }

@@ -13,11 +13,20 @@ class DreamForm extends React.Component {
     dream: "",
     tags: [],
     id: undefined,
-    privatePost: true
+    privatePost: true,
+    tagOptions: []
   }
 
-  generateDropdownOptions(tags) {
-    return tags.map(tag => {return { key: tag.tag_name, text: tag.tag_name, value: tag.id }})
+  generateDropdownOptions() {
+    this.setState({
+      tagOptions: this.props.interpretations.map(tag => {return { key: tag.tag_name, text: tag.tag_name, value: tag.id }})
+    })
+  }
+
+  componentDidUpdate(prevProps, prevState){
+    if(this.props.interpretations.length !== prevProps.interpretations.length){
+      this.generateDropdownOptions()
+    }
   }
 
   componentDidMount() {
@@ -117,7 +126,7 @@ class DreamForm extends React.Component {
                 />
               <Dropdown
                 compact
-                options={this.generateDropdownOptions(this.props.interpretations)}
+                options={this.state.tagOptions}
                 placeholder='dream tags'
                 name="tags"
                 clearable
