@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 class Nav extends Component {
-
   render() {
     const { activeItem } = this.props
     return (
@@ -65,7 +64,9 @@ class Nav extends Component {
                 active={activeItem === 'login'}
                 as={ Link }
                 to="/login"
-                >Login / Sign Up </Menu.Item>
+                >
+                Login / Sign Up
+              </Menu.Item>
 
             </React.Fragment>
             :
