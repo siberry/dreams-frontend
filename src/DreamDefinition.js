@@ -88,10 +88,9 @@ function DreamDefinition(props) {
           </Typography>
           <Button
             variant="outlined" color="secondary"
-            component= { Link }
-            to={ `/post_dream/${id}` }
+            onClick={() => this.props.history.push(`/post_dream/${id}`)}
             > Dreamt of this </Button>
-          <Button onClick={() => handleClick("change", id)}>Find a new image</Button>
+
         </CardContent>
         <div className={classes.controls}>
 

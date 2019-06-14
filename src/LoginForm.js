@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Button, Container } from 'semantic-ui-react'
+import { Form, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { Redirect, } from 'react-router-dom';
 
@@ -13,19 +13,17 @@ class LoginForm extends React.Component {
 		return (
 			<React.Fragment>
 				{!this.props.loading && !this.props.currentUser ?
-					<Container text>
-						<Form onSubmit={this.handleSubmit}>
-							<Form.Field>
-								<label>Username</label>
-								<input onChange={this.handleChange} name="username" value={this.state.username} placeholder='Username' />
-							</Form.Field>
-							<Form.Field>
-								<label>Password</label>
-								<input onChange={this.handleChange} type="password" name="password" value={this.state.password} placeholder='Password' />
-							</Form.Field>
-							<Button type='submit'>Submit</Button>
-						</Form>
-					</Container>
+					<Form onSubmit={this.handleSubmit}>
+						<Form.Field>
+							<label>Username</label>
+							<input onChange={this.handleChange} name="username" value={this.state.username} placeholder='Username' />
+						</Form.Field>
+						<Form.Field>
+							<label>Password</label>
+							<input onChange={this.handleChange} type="password" name="password" value={this.state.password} placeholder='Password' />
+						</Form.Field>
+						<Button type='submit'>Login</Button>
+					</Form>
 				:
 					<Redirect to='/post_dream'/>
 				}

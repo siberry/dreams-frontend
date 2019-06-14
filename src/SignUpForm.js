@@ -1,5 +1,5 @@
 import React from 'react'
-import {Form, Button, Container} from 'semantic-ui-react'
+import {Form, Button } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 class SignUpForm extends React.Component {
@@ -11,23 +11,21 @@ class SignUpForm extends React.Component {
 
   render() {
     return (
-      <Container text>
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Field>
-            <label>Username</label>
-            <input onChange={this.handleChange} name="username" value={this.state.username} placeholder="Username"/>
-          </Form.Field>
-          <Form.Field>
-            <label>Password</label>
-            <input onChange={this.handleChange} type="password" name="password" value={this.state.password} placeholder='Password' />
-          </Form.Field>
-          <Form.Field>
-            <label>Password Confirmation</label>
-            <input onChange={this.handleChange} type="password" name="passwordConfirmation" value={this.state.passwordConfirmation} placeholder='Password Confirmation' />
-          </Form.Field>
-          <Button type='submit'>Submit</Button>
-        </Form>
-			</Container>
+      <Form onSubmit={this.handleSubmit}>
+        <Form.Field>
+          <label>Username</label>
+          <input onChange={this.handleChange} name="username" value={this.state.username} placeholder="Username"/>
+        </Form.Field>
+        <Form.Field>
+          <label>Password</label>
+          <input onChange={this.handleChange} type="password" name="password" value={this.state.password} placeholder='Password' />
+        </Form.Field>
+        <Form.Field>
+          <label>Password Confirmation</label>
+          <input onChange={this.handleChange} type="password" name="passwordConfirmation" value={this.state.passwordConfirmation} placeholder='Password Confirmation' />
+        </Form.Field>
+        <Button type='submit'>Sign Up</Button>
+      </Form>
     )
   }
 
@@ -62,7 +60,7 @@ class SignUpForm extends React.Component {
 				} else {
           console.log(response)
 					this.props.setCurrentUser(response)
-					this.props.history.push(`/users/${response.id}`)
+					this.props.history.push("/post_dream")
 				}
 			})
 		} else {

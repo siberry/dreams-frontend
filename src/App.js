@@ -1,8 +1,9 @@
 import React from 'react';
 import './App.css';
 import DreamDictionary from './DreamDictionary'
-import SignUpForm from './SignUpForm'
-import LoginForm from './LoginForm'
+// import SignUpForm from './SignUpForm'
+// import LoginForm from './LoginForm'
+import UserFormsContainer from './UserFormsContainer'
 import Nav from './Nav'
 import DreamForm from './DreamForm'
 import DreamFeed from './DreamFeed'
@@ -103,10 +104,8 @@ class App extends React.Component {
               render={(routerProps) => <DreamDictionary {...routerProps}/>}/>
             <Route path="/dream_dictionary"
               render={() => <Redirect to='/'/>}/>
-            <Route path="/sign_up"
-              render={(routerProps) => <SignUpForm {...routerProps}/>}/>
             <Route path="/login"
-              render={(routerProps) => <LoginForm {...routerProps} />} />
+              render={(routerProps) => <UserFormsContainer {...routerProps} />} />
             <Route path="/"
               render={(routerProps) => <DreamDictionary {...routerProps}/>}/>
             <Route render={() => <Redirect to='/'/>}/>
