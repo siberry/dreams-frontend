@@ -82,6 +82,7 @@ class NavSearch extends Component {
         results={results}
         size="tiny"
         value={value}
+        onBlur={() => this.setState({value: ""})}
       />
       </Menu.Item>
     )
