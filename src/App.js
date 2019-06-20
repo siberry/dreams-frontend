@@ -46,6 +46,12 @@ class App extends React.Component {
     })
     .then(()=> this.props.changeLoadingStatus(false))
 
+    fetch("http://localhost:3000/users")
+    .then(res => res.json())
+    .then(users => {
+      this.props.addUsers(users);
+    })
+
     fetch("http://localhost:3000/dreams")
     .then(res => res.json())
     .then(dreams => {
@@ -127,6 +133,9 @@ function mapDispatchToProps(dispatch) {
   return {
     addInterpretations: (interpretations) => {
       return dispatch({type: "ADD_INTERPRETATIONS", payload: interpretations})
+    },
+    addUsers: (users) => {
+      return dispatch({type: "ADD_USERS", payload: users})
     },
     setActiveItem: (activeItem) => {
       return dispatch({type: "SET_ACTIVE_ITEM", payload: activeItem})

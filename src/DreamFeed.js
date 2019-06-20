@@ -1,7 +1,8 @@
 import React from 'react'
-import { Container, Loader, Dimmer, Card, Checkbox, Segment } from 'semantic-ui-react'
+import { Header, Container, Loader, Dimmer, Card, Checkbox, Segment } from 'semantic-ui-react'
 import FeedEvent from './FeedEvent'
 import { connect } from 'react-redux'
+// import RadarChart from './RadarChart'
 
 
 class DreamFeed extends React.Component {
@@ -38,6 +39,11 @@ class DreamFeed extends React.Component {
     })
   }
 
+  getUsername = () => {
+    let user = this.props.users.find(user => user.id === parseInt(this.props.match.params.id))
+    return user ? user.username : null
+  }
+
   render() {
     return (
       <Dimmer.Dimmable>
@@ -72,10 +78,17 @@ class DreamFeed extends React.Component {
               </Loader>
             </Dimmer>
           :
-
-          <Card.Group itemsPerRow="2">
-            {this.state.following ? this.renderDreamFeed(this.getFollowedFeeds()) : this.renderDreamFeed(this.props.dreams)}
-          </Card.Group>
+          <React.Fragment>
+            { this.props.feedToDisplay === "user" ?
+              <Header as="h3" block>
+                {this.getUsername() + "'s dreams"}
+              </Header>
+              : null
+            }
+              <Card.Group itemsPerRow="2">
+                {this.state.following ? this.renderDreamFeed(this.getFollowedFeeds()) : this.renderDreamFeed(this.props.dreams)}
+              </Card.Group>
+          </React.Fragment>
 
         }
       </Container>
@@ -88,7 +101,8 @@ function mapStateToProps(state) {
   return {
     loading: state.loading,
     currentUser: state.currentUser,
-    dreams: state.dreams
+    dreams: state.dreams,
+    users: state.users
   }
 }
 

@@ -48,9 +48,10 @@ class FeedEvent extends React.Component {
 
   render() {
     const { avatar, user, dream_tags, dream, currentUser, id, state_of_mind, quality, hours_slept } = this.props
+    const privatePost = this.props.private
     const { username } = user
     const date = this.formatDate()
-    
+
     return(
       <Card fluid >
         <Card.Content className="head">
@@ -93,6 +94,10 @@ class FeedEvent extends React.Component {
           <Feed.Date content={date}/>
         </Card.Content>
         <Card.Content>
+          {privatePost ?
+            <Card.Meta>Private</Card.Meta>
+            : null
+          }
           {dream}
           {dream_tags.length > 0 ?
             <Image.Group size="tiny">
@@ -125,9 +130,14 @@ class FeedEvent extends React.Component {
           {this.state.readMore ?
             <Feed.Extra text>
               <br/>
-              <strong>Mind:</strong> {state_of_mind}
+              {state_of_mind.length > 0 ?
+                <span>
+                  <strong>Mind:</strong> {state_of_mind}
+                </span>
+                : null
+              }
               <br/>
-              <strong>Slept for {hours_slept} hours</strong>
+              <strong>Slept for <em>{hours_slept}</em> hours</strong>
               <br/>
               <strong>Quality of sleep:</strong> {quality}
             </Feed.Extra> :

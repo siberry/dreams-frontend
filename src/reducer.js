@@ -5,7 +5,8 @@ const defaultState = {
   activeItem: "",
   selectedLetter: "A",
   selectedTerm: undefined,
-  dreams: []
+  dreams: [],
+  users: []
 }
 
 function reducer(state = defaultState, action) {
@@ -23,8 +24,9 @@ function reducer(state = defaultState, action) {
     case "GET_DREAMS":
       return {...state, dreams: action.payload}
     case "SET_SELECTED_LETTER":
-    console.log(action.payload)
       return {...state, selectedLetter: action.payload}
+    case "ADD_USERS":
+      return {...state, users: action.payload}
     default:
       return state
   }
