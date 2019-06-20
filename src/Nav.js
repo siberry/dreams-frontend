@@ -2,8 +2,11 @@ import React, { Component } from 'react'
 import { Menu, Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import NavSearch from './NavSearch'
 
 class Nav extends Component {
+
+
   render() {
     const { activeItem } = this.props
     return (
@@ -15,6 +18,7 @@ class Nav extends Component {
           className="icon">
           <img src="/kaleidiscope_icon.png" alt="icon"/>
         </Menu.Item>
+        <NavSearch history={this.props.history}/>
         <Menu.Item
           name='dream_dictionary'
           active={activeItem === 'dream_dictionary'}
