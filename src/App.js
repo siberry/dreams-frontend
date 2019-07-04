@@ -39,27 +39,27 @@ class App extends React.Component {
 
     const token = localStorage.getItem("token")
 
-    fetch("http://localhost:3000/dream_tags")
+    fetch("https://majestic-canyonlands-27127.herokuapp.com/dream_tags")
     .then(res => res.json())
     .then(interpretations => {
       this.props.addInterpretations(interpretations);
     })
     .then(()=> this.props.changeLoadingStatus(false))
 
-    fetch("http://localhost:3000/users")
+    fetch("https://majestic-canyonlands-27127.herokuapp.com/users")
     .then(res => res.json())
     .then(users => {
       this.props.addUsers(users);
     })
 
-    fetch("http://localhost:3000/dreams")
+    fetch("https://majestic-canyonlands-27127.herokuapp.com/dreams")
     .then(res => res.json())
     .then(dreams => {
       this.props.addDreams(dreams);
     })
 
  		if (token){
-			fetch('http://localhost:3000/auto_login', {
+			fetch('https://majestic-canyonlands-27127.herokuapp.com/auto_login', {
 				headers: {
 					"Authorization": token
 				}
