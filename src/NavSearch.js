@@ -76,7 +76,7 @@ class NavSearch extends Component {
       <Menu.Item>
       <Search
         category
-        placeholder='Search DreamCatchr...'
+        placeholder='Search DreamCatchr'
         onResultSelect={(e, {result }) => this.handleResultSelect({ result })}
         onSearchChange={(e, {value}) => this.handleSearchChange({ value })}
         results={results}

@@ -194,6 +194,8 @@ class DreamForm extends React.Component {
       },
       body: JSON.stringify({dream: {date, hours_slept, quality, state_of_mind, dream, user_id}, privatePost, tags})
     })
+    .then(res => res.json())
+    .then(dream => this.props.addDreams([dream, ...this.props.dreams]))
     .then(() => this.props.history.push(`/user/${user_id}`))
   }
 
@@ -214,7 +216,8 @@ function mapStateToProps(state) {
   return {
     interpretations: state.interpretations,
     currentUser: state.currentUser,
-    loading: state.loading
+    loading: state.loading,
+    dreams: state.dreams
   }
 }
 
@@ -222,6 +225,9 @@ function mapDispatchToProps(dispatch) {
   return {
     changeLoadingStatus: (status) => {
       return dispatch({type: "CHANGE_LOAD_STATUS", payload: status})
+    },
+    addDreams: (dreams) => {
+      return dispatch({type: "GET_DREAMS", payload: dreams})
     }
   }
 }
