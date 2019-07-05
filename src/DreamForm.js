@@ -185,7 +185,7 @@ class DreamForm extends React.Component {
     const {date, hours_slept, quality, state_of_mind, dream, tags, privatePost} = this.state
     const user_id = this.props.currentUser.id
     const method = this.state.id ? "PATCH" : "POST"
-    const url = this.state.id ? `${this.props.backendUrl}dreams/${this.state.id}` : `${this.props.backendUrl}dreams/`
+    const url = this.state.id ? `https://cors-anywhere.herokuapp.com/${this.props.backendUrl}dreams/${this.state.id}` : `https://cors-anywhere.herokuapp.com/${this.props.backendUrl}dreams/`
     fetch(url, {
       method: method,
       headers: {

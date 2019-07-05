@@ -57,7 +57,7 @@ class App extends React.Component {
     })
 
  		if (token){
-			fetch(this.props.backendUrl + 'auto_login', {
+			fetch("https://cors-anywhere.herokuapp.com/" + this.props.backendUrl + 'auto_login', {
 				headers: {
 					"Authorization": token
 				}
