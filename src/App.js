@@ -50,7 +50,7 @@ class App extends React.Component {
       this.props.addUsers(users);
     })
 
-    fetch(this.props.backendUrl + "dreams")
+    fetch("https://cors-anywhere.herokuapp.com/" + this.props.backendUrl + "dreams")
     .then(res => res.json())
     .then(dreams => {
       this.props.addDreams(dreams);
