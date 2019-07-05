@@ -190,7 +190,8 @@ class DreamForm extends React.Component {
       method: method,
       headers: {
         'Content-Type': "application/json",
-        'Accept': "application/json"
+        'Accept': "application/json",
+        Access-Control-Allow-Origin: "https://dreamcatchr.herokuapp.com/"
       },
       body: JSON.stringify({dream: {date, hours_slept, quality, state_of_mind, dream, user_id}, privatePost, tags})
     })
