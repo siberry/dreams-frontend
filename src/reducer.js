@@ -6,7 +6,8 @@ const defaultState = {
   selectedLetter: "A",
   selectedTerm: undefined,
   dreams: [],
-  users: []
+  users: [],
+  backendUrl: "https://majestic-canyonlands-27127.herokuapp.com/"
 }
 
 function reducer(state = defaultState, action) {

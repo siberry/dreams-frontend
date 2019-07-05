@@ -10,7 +10,7 @@ class FeedEvent extends React.Component {
 
   handleFollow = () => {
     if (!this.getFavoritesIds().includes(this.props.user.id)) {
-      fetch("http://localhost:3000/follows", {
+      fetch(this.props.backendUrl + "follows", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -27,7 +27,7 @@ class FeedEvent extends React.Component {
       })
     } else {
       const follow_id = this.props.currentUser.follows.find(follow => follow.followed_id === this.props.user.id).id
-      fetch(`http://localhost:3000/follows/${follow_id}`, {
+      fetch(`${this.props.backendUrl}follows/${follow_id}`, {
         method: "DELETE"
       })
       .then(res => res.json())
@@ -152,7 +152,8 @@ class FeedEvent extends React.Component {
 function mapStateToProps(state) {
   return {
     currentUser: state.currentUser,
-    interpretations: state.interpretations
+    interpretations: state.interpretations,
+    backendUrl: state.backendUrl
   }
 }
 

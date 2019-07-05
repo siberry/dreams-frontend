@@ -1,8 +1,6 @@
 import React from 'react';
 import './App.css';
 import DreamDictionary from './DreamDictionary'
-// import SignUpForm from './SignUpForm'
-// import LoginForm from './LoginForm'
 import UserFormsContainer from './UserFormsContainer'
 import Nav from './Nav'
 import DreamForm from './DreamForm'
@@ -39,27 +37,27 @@ class App extends React.Component {
 
     const token = localStorage.getItem("token")
 
-    fetch("https://majestic-canyonlands-27127.herokuapp.com/dream_tags")
+    fetch(this.props.backendUrl + "dream_tags")
     .then(res => res.json())
     .then(interpretations => {
       this.props.addInterpretations(interpretations);
     })
     .then(()=> this.props.changeLoadingStatus(false))
 
-    fetch("https://majestic-canyonlands-27127.herokuapp.com/users")
+    fetch(this.props.backendUrl + "users")
     .then(res => res.json())
     .then(users => {
       this.props.addUsers(users);
     })
 
-    fetch("https://majestic-canyonlands-27127.herokuapp.com/dreams")
+    fetch(this.props.backendUrl + "dreams")
     .then(res => res.json())
     .then(dreams => {
       this.props.addDreams(dreams);
     })
 
  		if (token){
-			fetch('https://majestic-canyonlands-27127.herokuapp.com/auto_login', {
+			fetch(this.props.backendUrl + 'auto_login', {
 				headers: {
 					"Authorization": token
 				}
@@ -125,7 +123,8 @@ class App extends React.Component {
 function mapStateToProps(state) {
   return {
     currentUser: state.currentUser,
-    activeItem: state.activeItem
+    activeItem: state.activeItem,
+    backendUrl: state.backendUrl
   }
 }
 

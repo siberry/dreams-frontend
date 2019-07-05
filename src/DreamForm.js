@@ -54,7 +54,7 @@ class DreamForm extends React.Component {
       date: defaultDate
     })
     if (this.props.match.params.id) {
-      fetch(`http://localhost:3000/dreams/${this.props.match.params.id}`)
+      fetch(`${this.props.backendUrl}dreams/${this.props.match.params.id}`)
       .then(res => res.json())
       .then(dream => {
         console.log(dream)
@@ -185,7 +185,7 @@ class DreamForm extends React.Component {
     const {date, hours_slept, quality, state_of_mind, dream, tags, privatePost} = this.state
     const user_id = this.props.currentUser.id
     const method = this.state.id ? "PATCH" : "POST"
-    const url = this.state.id ? `http://localhost:3000/dreams/${this.state.id}` : "http://localhost:3000/dreams/"
+    const url = this.state.id ? `${this.props.backendUrl}dreams/${this.state.id}` : `${this.props.backendUrl}dreams/`
     fetch(url, {
       method: method,
       headers: {
@@ -217,7 +217,8 @@ function mapStateToProps(state) {
     interpretations: state.interpretations,
     currentUser: state.currentUser,
     loading: state.loading,
-    dreams: state.dreams
+    dreams: state.dreams,
+    backendUrl: state.backendUrl
   }
 }
 

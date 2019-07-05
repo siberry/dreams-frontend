@@ -38,7 +38,7 @@ class LoginForm extends React.Component {
 	}
 
 	handleSubmit = () => {
-		fetch("http://localhost:3000/login", {
+		fetch(this.props.backendUrl + "login", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -63,7 +63,8 @@ class LoginForm extends React.Component {
 function mapStateToProps(state) {
   return {
     currentUser: state.currentUser,
-		loading: state.loading
+		loading: state.loading,
+		backendUrl: state.backendUrl
   }
 }
 

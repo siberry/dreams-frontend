@@ -45,7 +45,7 @@ class SignUpForm extends React.Component {
 
   createUser = () => {
 		if (this.state.password === this.state.passwordConfirmation){
-			fetch("http://localhost:3000/users", {
+			fetch(this.props.backendUrl + "users", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -71,6 +71,12 @@ class SignUpForm extends React.Component {
 	}
 }
 
+function mapStateToProps(state) {
+  return {
+    backendUrl: state.backendUrl
+  }
+}
+
 function mapDispatchToProps(dispatch) {
   return {
 		setCurrentUser: (currentUser) => {
@@ -79,4 +85,4 @@ function mapDispatchToProps(dispatch) {
 	}
 }
 
-export default connect(null, mapDispatchToProps)(SignUpForm)
+export default connect(mapStateToProps, mapDispatchToProps)(SignUpForm)
