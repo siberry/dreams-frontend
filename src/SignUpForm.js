@@ -45,7 +45,7 @@ class SignUpForm extends React.Component {
 
   createUser = () => {
 		if (this.state.password === this.state.passwordConfirmation){
-			fetch(this.props.backendUrl + "users", {
+			fetch("https://cors-anywhere.herokuapp.com/" + this.props.backendUrl + "users", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
