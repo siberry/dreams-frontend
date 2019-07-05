@@ -27,7 +27,7 @@ class FeedEvent extends React.Component {
       })
     } else {
       const follow_id = this.props.currentUser.follows.find(follow => follow.followed_id === this.props.user.id).id
-      fetch("https://cors-anywhere.herokuapp.com/" + `${this.props.backendUrl}follows/${follow_id}`, {
+      fetch(`https://cors-anywhere.herokuapp.com/${this.props.backendUrl}follows/${follow_id}`, {
         method: "DELETE"
       })
       .then(res => res.json())
