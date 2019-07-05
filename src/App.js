@@ -37,14 +37,14 @@ class App extends React.Component {
 
     const token = localStorage.getItem("token")
 
-    fetch(this.props.backendUrl + "dream_tags")
+    fetch("https://cors-anywhere.herokuapp.com/" + this.props.backendUrl + "dream_tags")
     .then(res => res.json())
     .then(interpretations => {
       this.props.addInterpretations(interpretations);
     })
     .then(()=> this.props.changeLoadingStatus(false))
 
-    fetch(this.props.backendUrl + "users")
+    fetch("https://cors-anywhere.herokuapp.com/" + this.props.backendUrl + "users")
     .then(res => res.json())
     .then(users => {
       this.props.addUsers(users);
