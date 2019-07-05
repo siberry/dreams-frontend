@@ -40,7 +40,13 @@ class DreamFeed extends React.Component {
   }
 
   getUsername = () => {
-    let user = this.props.users.find(user => user.id === parseInt(this.props.match.params.id))
+    let userId = parseInt(this.props.match.params.id)
+    let user
+    if (this.props.currentUser.id && this.props.currentUser.id === userId) {
+      user = this.props.currentUser
+    }else {
+      user = this.props.users.find(user => user.id === userId)
+    }
     return user ? user.username : null
   }
 

@@ -59,8 +59,8 @@ class SignUpForm extends React.Component {
 				if (response.errors){
 					alert(response.errors)
 				} else {
-          console.log(response)
 					this.props.setCurrentUser(response.user)
+          
           localStorage.setItem("token", response.token)
 					this.props.history.push("/post_dream")
 				}
