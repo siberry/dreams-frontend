@@ -50,6 +50,7 @@ class SignUpForm extends React.Component {
 				headers: {
 					"Content-Type": "application/json",
 					"Accepts": "application/json",
+          "Access-Control-Allow-Origin": "https://dreamcatchr.herokuapp.com/"
 				},
 				body: JSON.stringify(this.state)
 			})
