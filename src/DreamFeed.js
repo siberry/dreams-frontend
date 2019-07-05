@@ -91,7 +91,9 @@ class DreamFeed extends React.Component {
               </Header>
               : null
             }
-              <Card.Group itemsPerRow="2">
+              <Card.Group
+                stackable
+                itemsPerRow="2">
                 {this.state.following ? this.renderDreamFeed(this.getFollowedFeeds()) : this.renderDreamFeed(this.props.dreams)}
               </Card.Group>
           </React.Fragment>
