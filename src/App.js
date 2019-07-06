@@ -37,29 +37,31 @@ class App extends React.Component {
 
     const token = localStorage.getItem("token")
 
-    fetch("https://cors-anywhere.herokuapp.com/" + this.props.backendUrl + "dream_tags")
+    fetch(this.props.backendUrl + "dream_tags")
     .then(res => res.json())
     .then(interpretations => {
       this.props.addInterpretations(interpretations);
     })
     .then(()=> this.props.changeLoadingStatus(false))
 
-    fetch("https://cors-anywhere.herokuapp.com/" + this.props.backendUrl + "users")
+    fetch(this.props.backendUrl + "users")
     .then(res => res.json())
     .then(users => {
       this.props.addUsers(users);
     })
 
-    fetch("https://cors-anywhere.herokuapp.com/" + this.props.backendUrl + "dreams")
+    fetch(this.props.backendUrl + "dreams")
     .then(res => res.json())
     .then(dreams => {
       this.props.addDreams(dreams);
     })
 
  		if (token){
-			fetch("https://cors-anywhere.herokuapp.com/" + this.props.backendUrl + 'auto_login', {
+			fetch(this.props.backendUrl + 'auto_login', {
 				headers: {
-					"Authorization": token
+					"Authorization": token,
+          "Access-Control-Allow-Origin": "http://localhost:3001",
+          "Access-Control-Allow-Headers": "*"
 				}
 			})
 			.then(res => res.json())

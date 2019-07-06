@@ -45,7 +45,7 @@ class SignUpForm extends React.Component {
 
   createUser = () => {
 		if (this.state.password === this.state.passwordConfirmation){
-			fetch("https://cors-anywhere.herokuapp.com/" + this.props.backendUrl + "users", {
+			fetch(this.props.backendUrl + "users", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -60,7 +60,7 @@ class SignUpForm extends React.Component {
 					alert(response.errors)
 				} else {
 					this.props.setCurrentUser(response.user)
-          
+
           localStorage.setItem("token", response.token)
 					this.props.history.push("/post_dream")
 				}

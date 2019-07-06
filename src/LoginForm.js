@@ -38,7 +38,7 @@ class LoginForm extends React.Component {
 	}
 
 	handleSubmit = () => {
-		fetch("https://cors-anywhere.herokuapp.com/" + this.props.backendUrl + "login", {
+		fetch(this.props.backendUrl + "login", {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
