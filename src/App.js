@@ -37,7 +37,12 @@ class App extends React.Component {
 
     const token = localStorage.getItem("token")
 
-    fetch(this.props.backendUrl + "dream_tags")
+    fetch(this.props.backendUrl + "dream_tags", {
+      headers: {
+        "Access-Control-Allow-Origin": "http://localhost:3001",
+        "Access-Control-Allow-Headers": "*"
+      }
+    })
     .then(res => res.json())
     .then(interpretations => {
       this.props.addInterpretations(interpretations);
