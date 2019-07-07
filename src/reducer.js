@@ -7,7 +7,7 @@ const defaultState = {
   selectedTerm: undefined,
   dreams: [],
   users: [],
-  backendUrl: "https://majestic-canyonlands-27127.herokuapp.com/"
+  backendUrl: "https://cors-anywhere.herokuapp.com/https://majestic-canyonlands-27127.herokuapp.com/"
 }
 
 function reducer(state = defaultState, action) {
