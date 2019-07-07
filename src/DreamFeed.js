@@ -10,6 +10,21 @@ class DreamFeed extends React.Component {
     following: false
   }
 
+  componentDidMount() {
+    const {currentUser} = this.props
+    fetch(this.props.backendUrl + "dreams")
+    .then(res => res.json())
+    .then(all_dreams => {
+      let dreams
+      if (currentUser) {
+        dreams = all_dreams.filter(dream => !dream.private || currentUser.id === dream.user.id)
+      } else {
+        dreams = all_dreams.filter(dream => !dream.private)
+      }
+      this.props.addDreams(dreams);
+    })
+  }
+
   renderDreamFeed(arr) {
     const publicAndCurrentUserDreams = arr.filter(dream => {
       return !dream.private || (this.props.currentUser && (dream.user.id === this.props.currentUser.id))
@@ -23,7 +38,7 @@ class DreamFeed extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.currentUser && this.props.currentUser.favorites.length === 0 && prevState.following ) {
+    if (this.props.currentUser && this.props.currentUser.favorites && prevState.following ) {
       this.setState({following: false})
     }
   }
@@ -42,7 +57,7 @@ class DreamFeed extends React.Component {
   getUsername = () => {
     let userId = parseInt(this.props.match.params.id)
     let user
-    if (this.props.currentUser.id && this.props.currentUser.id === userId) {
+    if (this.props.currentUser && this.props.currentUser.id === userId) {
       user = this.props.currentUser
     }else {
       user = this.props.users.find(user => user.id === userId)
@@ -63,15 +78,14 @@ class DreamFeed extends React.Component {
               >
               Global Feed
             </label>
-            {this.props.currentUser ?
-              <Checkbox
-                disabled={this.props.currentUser.favorites && this.props.currentUser.favorites.length === 0}
-                label="Followed Dreamers"
-                onChange={this.handleSlider}
-                slider
-                checked={this.state.following}
-                /> : null
-            }
+            <Checkbox
+              disabled={ this.props.currentUser && this.props.currentUser.favorites && this.props.currentUser.favorites.length === 0}
+              label="Followed Dreamers"
+              onChange={this.handleSlider}
+              slider
+              checked={this.state.following}
+              />
+
           </Segment>
           : null
         }
@@ -110,7 +124,8 @@ function mapStateToProps(state) {
     loading: state.loading,
     currentUser: state.currentUser,
     dreams: state.dreams,
-    users: state.users
+    users: state.users,
+    backendUrl: state.backendUrl
   }
 }
 
@@ -118,6 +133,9 @@ function mapDispatchToProps(dispatch) {
   return {
     changeLoadingStatus: (status) => {
       return dispatch({type: "CHANGE_LOAD_STATUS", payload: status})
+    },
+    addDreams: (dreams) => {
+      return dispatch({type: "GET_DREAMS", payload: dreams})
     }
   }
 }

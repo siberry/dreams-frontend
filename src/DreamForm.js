@@ -1,7 +1,7 @@
 import React from 'react'
 import { DateInput } from 'semantic-ui-calendar-react';
 import { Form, Container, Divider, Button, Dropdown, Loader, Dimmer, Checkbox, Segment } from 'semantic-ui-react'
-import { Redirect, } from 'react-router-dom';
+// import { Redirect, } from 'react-router-dom';
 import { connect } from 'react-redux'
 
 class DreamForm extends React.Component {
@@ -82,7 +82,7 @@ class DreamForm extends React.Component {
   render() {
     return (
       <React.Fragment>
-        {!this.props.loading && this.props.currentUser ?
+        {!this.props.loading ?
           <Container text>
             <Form onSubmit={this.handleSubmit}>
               <Form.Field>
@@ -180,16 +180,15 @@ class DreamForm extends React.Component {
             </Dimmer>
           </Container>
         }
-        {!this.props.loading && !this.props.currentUser ?
-          <Redirect to='/login'/> : null
-        }
+
       </React.Fragment>
     )
   }
 
   handleSubmit = () => {
     const {date, hours_slept, quality, state_of_mind, dream, tags, privatePost} = this.state
-    const user_id = this.props.currentUser.id
+    let user_id
+    user_id = this.props.currentUser ? this.props.currentUser.id : 8
     const method = this.state.id ? "PATCH" : "POST"
     const url = this.state.id ? `${this.props.backendUrl}dreams/${this.state.id}` : `${this.props.backendUrl}dreams/`
     fetch(url, {
@@ -202,7 +201,6 @@ class DreamForm extends React.Component {
       body: JSON.stringify({dream: {date, hours_slept, quality, state_of_mind, dream, user_id}, privatePost, tags})
     })
     .then(res => res.json())
-    .then(dream => this.props.addDreams([dream, ...this.props.dreams]))
     .then(() => this.props.history.push(`/user/${user_id}`))
   }
 

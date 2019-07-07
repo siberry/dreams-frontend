@@ -18,7 +18,7 @@ class App extends React.Component {
     else if (pathname.includes("/post_dream") || pathname.includes("/dream/")) {
       return "post_dream"
     }
-    else if (pathname === "/dream_feed") {
+    else if (pathname === "/dream_feed" || pathname.includes('/user/')) {
       return "dream_feed"
     }
     else if (pathname === "/login") {
@@ -48,13 +48,6 @@ class App extends React.Component {
       this.props.addInterpretations(interpretations);
     })
     .then(()=> this.props.changeLoadingStatus(false))
-
-    fetch(this.props.backendUrl + "dreams")
-    .then(res => res.json())
-    .then(all_dreams => {
-      let dreams = all_dreams.filter(dream => !dream.private)
-      this.props.addDreams(dreams);
-    })
 
     fetch(this.props.backendUrl + "users")
     .then(res => res.json())
