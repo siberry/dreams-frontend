@@ -64,7 +64,6 @@ class DreamForm extends React.Component {
       })
       .then(res => res.json())
       .then(dream => {
-        console.log(dream)
         this.setState({
           id: dream.id,
           date: dream.date,

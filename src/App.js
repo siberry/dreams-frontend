@@ -57,7 +57,9 @@ class App extends React.Component {
 
     fetch(this.props.backendUrl + "dreams")
     .then(res => res.json())
-    .then(dreams => {
+    .then(all_dreams => {
+      const {currentUser} = this.props
+      const dreams = all_dreams.filter(dream => !dream.private || dream.user.id === currentUser.id)
       this.props.addDreams(dreams);
     })
 
