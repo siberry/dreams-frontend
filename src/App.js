@@ -49,18 +49,17 @@ class App extends React.Component {
     })
     .then(()=> this.props.changeLoadingStatus(false))
 
+    fetch(this.props.backendUrl + "dreams")
+    .then(res => res.json())
+    .then(all_dreams => {
+      let dreams = all_dreams.filter(dream => !dream.private)
+      this.props.addDreams(dreams);
+    })
+
     fetch(this.props.backendUrl + "users")
     .then(res => res.json())
     .then(users => {
       this.props.addUsers(users);
-    })
-
-    fetch(this.props.backendUrl + "dreams")
-    .then(res => res.json())
-    .then(all_dreams => {
-      const {currentUser} = this.props
-      const dreams = all_dreams.filter(dream => !dream.private || dream.user.id === currentUser.id)
-      this.props.addDreams(dreams);
     })
 
  		if (token){
