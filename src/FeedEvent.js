@@ -36,7 +36,9 @@ class FeedEvent extends React.Component {
   }
 
   getFavoritesIds = () => {
-    return this.props.currentUser.favorites.map(favorite => favorite.id)
+    if (this.props.currentUser) {
+      return this.props.currentUser.favorites.map(favorite => favorite.id)
+    }
   }
 
   formatDate = () => {
@@ -89,7 +91,25 @@ class FeedEvent extends React.Component {
                   />
                 </Icon.Group>
               } />
-            : null
+            :
+            <Popup
+              position='top center'
+              content={
+                "Create an account to follow users"
+              }
+              trigger={
+                <Icon.Group>
+                  <Icon
+                    link
+                    name='cloud'
+                  />
+                  <Icon
+                    link
+                    corner
+                    name="add"
+                  />
+                </Icon.Group>
+              } />
           }
           <Feed.Date content={date}/>
         </Card.Content>

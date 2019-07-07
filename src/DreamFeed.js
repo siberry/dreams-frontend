@@ -1,5 +1,5 @@
 import React from 'react'
-import { Header, Container, Loader, Dimmer, Card, Checkbox, Segment } from 'semantic-ui-react'
+import { Header, Container, Loader, Dimmer, Card, Checkbox, Segment, Popup } from 'semantic-ui-react'
 import FeedEvent from './FeedEvent'
 import { connect } from 'react-redux'
 // import RadarChart from './RadarChart'
@@ -7,7 +7,8 @@ import { connect } from 'react-redux'
 
 class DreamFeed extends React.Component {
   state = {
-    following: false
+    following: false,
+    alert: undefined
   }
 
   componentDidMount() {
@@ -49,9 +50,11 @@ class DreamFeed extends React.Component {
   }
 
   handleSlider = (checked) => {
-    this.setState(prevState => {
-      return {following: !prevState.following}
-    })
+    if (this.props.currentUser) {
+      this.setState(prevState => {
+        return {following: !prevState.following}
+      })
+    }
   }
 
   getUsername = () => {
@@ -66,27 +69,36 @@ class DreamFeed extends React.Component {
   }
 
   render() {
+    console.log(this.state.alert)
     return (
       <Dimmer.Dimmable>
         <Container>
         {this.props.feedToDisplay === "global" ?
-          <Segment compact className="slider">
-            <label
-              className="toggle-global"
-              style={this.state.following ? {color: "rgb(0,0,0,.4)"} : null }
-              onClick={this.handleSlider}
-              >
-              Global Feed
-            </label>
-            <Checkbox
-              disabled={ this.props.currentUser && this.props.currentUser.favorites && this.props.currentUser.favorites.length === 0}
-              label="Followed Dreamers"
-              onChange={this.handleSlider}
-              slider
-              checked={this.state.following}
-              />
+          <Popup
+            position="top right"
+            disabled={!!this.props.currentUser}
+            trigger={
+              <Segment compact className="slider">
+                <label
+                  className="toggle-global"
+                  style={this.state.following ? {color: "rgb(0,0,0,.4)"} : null }
+                  onClick={this.handleSlider}
+                  >
+                  Global Feed
+                </label>
+                <Checkbox
+                  disabled={ this.props.currentUser && this.props.currentUser.favorites && this.props.currentUser.favorites.length === 0}
+                  label="Followed Dreamers"
+                  onChange={this.handleSlider}
+                  slider
+                  checked={this.state.following}
+                  />
+              </Segment>
+            }
+            >
+            <Popup.Content>Create an account to follow users</Popup.Content>
+          </Popup>
 
-          </Segment>
           : null
         }
         {this.props.loading ?
