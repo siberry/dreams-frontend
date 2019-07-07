@@ -95,7 +95,7 @@ class FeedEvent extends React.Component {
             <Popup
               position='top center'
               content={
-                "Create an account to follow users"
+                "Login or create an account to follow users"
               }
               trigger={
                 <Icon.Group>

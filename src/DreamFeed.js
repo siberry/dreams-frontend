@@ -69,7 +69,6 @@ class DreamFeed extends React.Component {
   }
 
   render() {
-    console.log(this.state.alert)
     return (
       <Dimmer.Dimmable>
         <Container>
@@ -96,7 +95,7 @@ class DreamFeed extends React.Component {
               </Segment>
             }
             >
-            <Popup.Content>Create an account to follow users</Popup.Content>
+            <Popup.Content>Login or create an account to follow users</Popup.Content>
           </Popup>
 
           : null
