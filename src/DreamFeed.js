@@ -23,7 +23,7 @@ class DreamFeed extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.currentUser.favorites && this.props.currentUser.favorites.length === 0 && prevState.following ) {
+    if (this.props.currentUser && this.props.currentUser.favorites.length === 0 && prevState.following ) {
       this.setState({following: false})
     }
   }
