@@ -54,7 +54,14 @@ class DreamForm extends React.Component {
       date: defaultDate
     })
     if (this.props.match.params.id) {
-      fetch(`${this.props.backendUrl}dreams/${this.props.match.params.id}`)
+      fetch(`${this.props.backendUrl}dreams/${this.props.match.params.id}`, {
+        headers: {
+          "Access-Control-Allow-Origin": "https://dreamcatchr.herokuapp.com/",
+          "Access-Control-Allow-Headers": "*",
+          "Access-Control-Allow-Methods": "GET, OPTIONS",
+          "Access-Control-Allow-Credentials": true,
+        }
+      })
       .then(res => res.json())
       .then(dream => {
         console.log(dream)

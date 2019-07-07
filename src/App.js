@@ -39,7 +39,7 @@ class App extends React.Component {
 
     fetch(this.props.backendUrl + "dream_tags", {
       headers: {
-        "Access-Control-Allow-Origin": "http://localhost:3001",
+        "Access-Control-Allow-Origin": "https://dreamcatchr.herokuapp.com/",
         "Access-Control-Allow-Headers": "*"
       }
     })
@@ -65,7 +65,7 @@ class App extends React.Component {
 			fetch(this.props.backendUrl + 'auto_login', {
 				headers: {
 					"Authorization": token,
-          "Access-Control-Allow-Origin": "http://localhost:3001",
+          "Access-Control-Allow-Origin": "https://dreamcatchr.herokuapp.com/",
           "Access-Control-Allow-Headers": "*"
 				}
 			})
