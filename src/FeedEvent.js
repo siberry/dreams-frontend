@@ -36,7 +36,7 @@ class FeedEvent extends React.Component {
   }
 
   getFavoritesIds = () => {
-    if (this.props.currentUser) {
+    if (this.props.currentUser && this.props.currentUser.favorites) {
       return this.props.currentUser.favorites.map(favorite => favorite.id)
     }
   }
@@ -95,7 +95,7 @@ class FeedEvent extends React.Component {
             <Popup
               position='top center'
               content={
-                "Login or create an account to follow users"
+                "Log in or sign up to follow users"
               }
               trigger={
                 <Icon.Group>

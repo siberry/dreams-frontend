@@ -95,7 +95,7 @@ class DreamFeed extends React.Component {
               </Segment>
             }
             >
-            <Popup.Content>Login or create an account to follow users</Popup.Content>
+            <Popup.Content>Log in or sign up to follow users</Popup.Content>
           </Popup>
 
           : null
