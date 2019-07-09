@@ -63,6 +63,7 @@ class FeedEvent extends React.Component {
             <Popup
               position='top center'
               content={
+                this.getFavoritesIds() &&
                 this.getFavoritesIds().includes(user.id) ?
                 "Unfollow" : 'Follow user'
               }
