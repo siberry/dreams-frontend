@@ -83,10 +83,10 @@ class FeedEvent extends React.Component {
                   <Icon
                     link
                     corner
-                    name={ currentUser.favorites.map(favorite => favorite.id).includes(user.id) ?
+                    name={ this.getFavoritesIds() && this.getFavoritesIds().includes(user.id) ?
                       "remove" : "add"
                     }
-                    color={ currentUser.favorites.map(favorite => favorite.id).includes(user.id) ?
+                    color={ this.getFavoritesIds() && this.getFavoritesIds().includes(user.id) ?
                     "red" : null
                     }
                   />
