@@ -73,10 +73,10 @@ class FeedEvent extends React.Component {
                   <Icon
                     link
                     name='cloud'
-                    size={ this.getFavoritesIds().includes(user.id) ?
+                    size={ this.getFavoritesIds() && this.getFavoritesIds().includes(user.id) ?
                       "small": null
                     }
-                    color={ this.getFavoritesIds().includes(user.id) ?
+                    color={ this.getFavoritesIds() && this.getFavoritesIds().includes(user.id) ?
                     "red" : null
                     }
                   />

@@ -37,12 +37,7 @@ class App extends React.Component {
 
     const token = localStorage.getItem("token")
 
-    fetch(this.props.backendUrl + "dream_tags", {
-      headers: {
-        "Access-Control-Allow-Origin": "https://dreamcatchr.herokuapp.com/",
-        "Access-Control-Allow-Headers": "*"
-      }
-    })
+    fetch(this.props.backendUrl + "dream_tags")
     .then(res => res.json())
     .then(interpretations => {
       this.props.addInterpretations(interpretations);
