@@ -45,8 +45,12 @@ class DreamFeed extends React.Component {
   }
 
   getFollowedFeeds() {
-    const favoritesIds =  this.props.currentUser.favorites.map(favorite => favorite.id)
-    return this.props.dreams.filter(dream => favoritesIds.includes(dream.user.id) )
+    if (this.props.currentUser.favorites) {
+      const favoritesIds =  this.props.currentUser.favorites.map(favorite => favorite.id)
+      return this.props.dreams.filter(dream => favoritesIds.includes(dream.user.id) )
+    } else {
+      return []
+    }
   }
 
   handleSlider = (checked) => {
