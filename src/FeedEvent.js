@@ -38,6 +38,8 @@ class FeedEvent extends React.Component {
   getFavoritesIds = () => {
     if (this.props.currentUser && this.props.currentUser.favorites) {
       return this.props.currentUser.favorites.map(favorite => favorite.id)
+    } else {
+      return [];
     }
   }
 
