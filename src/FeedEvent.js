@@ -95,6 +95,9 @@ class FeedEvent extends React.Component {
                 </Icon.Group>
               } />
             :
+            null
+          }
+          {!currentUser ?
             <Popup
               position='top center'
               content={
@@ -113,6 +116,8 @@ class FeedEvent extends React.Component {
                   />
                 </Icon.Group>
               } />
+            :
+            null
           }
           <Feed.Date content={date}/>
         </Card.Content>
