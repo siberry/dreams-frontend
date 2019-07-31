@@ -7,8 +7,8 @@ const defaultState = {
   selectedTerm: undefined,
   dreams: [],
   users: [],
-  backendUrl: //"https://majestic-canyonlands-27127.herokuapp.com/"
-  //"http://localhost:3000/" https://cors-anywhere.herokuapp.com/
+  backendUrl: "https://majestic-canyonlands-27127.herokuapp.com/"
+    //"http://localhost:3000/" https://cors-anywhere.herokuapp.com/
 
 }
 
