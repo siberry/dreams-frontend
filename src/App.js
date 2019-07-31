@@ -61,6 +61,7 @@ class App extends React.Component {
 			.then(res => res.json())
 			.then(response => {
 				if (response.errors){
+          this.props.setCurrentUser(response)
 				} else {
 					this.props.setCurrentUser(response);
 				}
