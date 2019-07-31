@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 
 class FollowIcon extends React.Component {
   handleFollow = () => {
-    const { user } = this.props
     const user_id = this.props.currentUser ? this.props.currentUser.id : 8
     if (!this.isFavorite(this.props.user.id)) {
       fetch(this.props.backendUrl + "follows", {

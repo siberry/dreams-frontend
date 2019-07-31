@@ -1,5 +1,5 @@
 import React from 'react'
-import { Feed, Image, Button, Card, Icon, Popup } from 'semantic-ui-react'
+import { Feed, Image, Button, Card, Popup } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import FollowIcon from './FollowIcon'
