@@ -7,7 +7,7 @@ const defaultState = {
   selectedTerm: undefined,
   dreams: [],
   users: [],
-  backendUrl: "https://cors-anywhere.herokuapp.com/https://majestic-canyonlands-27127.herokuapp.com/"
+  backendUrl: "https://thawing-scrubland-61961.herokuapp.com/https://majestic-canyonlands-27127.herokuapp.com/"
     //"http://localhost:3000/"
 
 }
