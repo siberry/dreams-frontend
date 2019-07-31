@@ -79,7 +79,7 @@ class DreamFeed extends React.Component {
         {this.props.feedToDisplay === "global" ?
           <Popup
             position="top right"
-            disabled={!!this.props.currentUser}
+            disabled={true}
             trigger={
               <Segment compact className="slider">
                 <label

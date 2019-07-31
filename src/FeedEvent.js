@@ -2,45 +2,11 @@ import React from 'react'
 import { Feed, Image, Button, Card, Icon, Popup } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import FollowIcon from './FollowIcon'
 
 class FeedEvent extends React.Component {
   state={
     readMore: false
-  }
-
-  handleFollow = () => {
-    if (!this.getFavoritesIds().includes(this.props.user.id)) {
-      fetch(this.props.backendUrl + "follows", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accepts": "application/json",
-        },
-        body: JSON.stringify({
-          user_id: this.props.currentUser.id,
-          followed_id: this.props.user.id
-        })
-      })
-      .then(res => res.json())
-      .then(res => {
-        this.props.setCurrentUser(res)
-      })
-    } else {
-      const follow_id = this.props.currentUser.follows.find(follow => follow.followed_id === this.props.user.id).id
-      fetch(`${this.props.backendUrl}follows/${follow_id}`, {
-        method: "DELETE"
-      })
-      .then(res => res.json())
-      .then(res => this.props.setCurrentUser(res))
-    }
-  }
-
-  getFavoritesIds = () => {
-    if (this.props.currentUser && this.props.currentUser.favorites) {
-      return this.props.currentUser.favorites.map(favorite => favorite.id)
-    } else {
-      return [];
-    }
   }
 
   formatDate = () => {
@@ -61,61 +27,8 @@ class FeedEvent extends React.Component {
         <Card.Content className="head">
           <Image avatar floated="left" src={avatar || `https://api.adorable.io/avatars/184/${username}`}/>
           <Feed.User content={username} as={ Link } to={`/user/${user.id}`}/>
-          {currentUser && currentUser.id !== user.id ?
-            <Popup
-              position='top center'
-              content={
-                this.getFavoritesIds() &&
-                this.getFavoritesIds().includes(user.id) ?
-                "Unfollow" : 'Follow user'
-              }
-              trigger={
-                <Icon.Group
-                  onClick={this.handleFollow}>
-                  <Icon
-                    link
-                    name='cloud'
-                    size={ this.getFavoritesIds() && this.getFavoritesIds().includes(user.id) ?
-                      "small": null
-                    }
-                    color={ this.getFavoritesIds() && this.getFavoritesIds().includes(user.id) ?
-                    "red" : null
-                    }
-                  />
-                  <Icon
-                    link
-                    corner
-                    name={ this.getFavoritesIds() && this.getFavoritesIds().includes(user.id) ?
-                      "remove" : "add"
-                    }
-                    color={ this.getFavoritesIds() && this.getFavoritesIds().includes(user.id) ?
-                    "red" : null
-                    }
-                  />
-                </Icon.Group>
-              } />
-            :
-            null
-          }
-          {!currentUser ?
-            <Popup
-              position='top center'
-              content={
-                "Log in or sign up to follow users"
-              }
-              trigger={
-                <Icon.Group>
-                  <Icon
-                    link
-                    name='cloud'
-                  />
-                  <Icon
-                    link
-                    corner
-                    name="add"
-                  />
-                </Icon.Group>
-              } />
+          {!currentUser || currentUser.id !== user.id || currentUser.id === 8 ?
+            <FollowIcon user={user}/>
             :
             null
           }

@@ -12,7 +12,7 @@ class LoginForm extends React.Component {
 	render(){
 		return (
 			<React.Fragment>
-				{!this.props.loading && !this.props.currentUser ?
+				{!this.props.loading || !this.props.currentUser || this.props.currentUser.id === 8  ?
 					<Form onSubmit={this.handleSubmit}>
 						<Form.Field>
 							<label>Username</label>

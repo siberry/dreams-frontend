@@ -38,7 +38,7 @@ class Nav extends Component {
           active={activeItem === 'post_dream'}
         />
         <Menu.Menu position='right'>
-          {this.props.currentUser ?
+          {this.props.currentUser && this.props.currentUser.id !== 8 ?
             <React.Fragment>
               <Menu.Item
                 name='profile'
