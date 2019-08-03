@@ -73,6 +73,8 @@ class DreamFeed extends React.Component {
   }
 
   render() {
+    const userId = this.props.match.params.id
+    console.log(userId)
     return (
       <Dimmer.Dimmable>
         <Container>
@@ -116,7 +118,8 @@ class DreamFeed extends React.Component {
           <React.Fragment>
             { this.props.feedToDisplay === "user" ?
               <Header as="h3" block>
-                {this.getUsername() + "'s dreams"}
+                {this.getUsername()}
+                {userId !== "8" ? "'s dreams" : " dreams"}
               </Header>
               : null
             }

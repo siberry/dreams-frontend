@@ -35,8 +35,6 @@ class App extends React.Component {
   componentDidMount(){
     this.props.setActiveItem(this.getActiveItem())
 
-    const token = localStorage.getItem("token")
-
     fetch(this.props.backendUrl + "dream_tags")
     .then(res => res.json())
     .then(interpretations => {
@@ -50,6 +48,7 @@ class App extends React.Component {
       this.props.addUsers(users);
     })
 
+    const token = localStorage.getItem("token")
  		if (token){
 			fetch(this.props.backendUrl + 'auto_login', {
 				headers: {
@@ -60,13 +59,19 @@ class App extends React.Component {
 			})
 			.then(res => res.json())
 			.then(response => {
-				if (response.errors){
-          this.props.setCurrentUser(response)
-				} else {
-					this.props.setCurrentUser(response);
+				if (!response.errors){
+          this.props.setCurrentUser(response);
 				}
 			})
-		}
+    } else {
+      fetch(this.props.backendUrl + "users/8")
+      .then(res => res.json())
+			.then(response => {
+				if (!response.errors){
+          this.props.setCurrentUser(response);
+				}
+			})
+    }
 	}
 
   componentDidUpdate() {
